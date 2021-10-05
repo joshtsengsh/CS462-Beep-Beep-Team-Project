@@ -1,0 +1,12 @@
+.link-unstyled, .link-unstyled:link {
+  color: inherit;
+  text-decoration: inherit;
+}
+.link-unstyled:hover {
+  background-color: inherit;
+  color: blue;
+}
+.clickable {
+  cursor: pointer;
+}
+
