@@ -1,8 +1,12 @@
 # CS462 Beep Beep Team Project
-"Beep Beep", a team project for SPD Singapore and the CS462 Internet of Things (IoT) module at Singapore Management University. Initiated in AY2021/2022 Term 1.
+"Beep Beep", a team project for SPD Singapore and the CS462 Internet of Things (IoT) module at Singapore Management University.
+
+Initiated in AY2021/2022 Term 1.
 
 # Introduction
-Greetings, and welcome to the code repository for the Beep Beep project. This project is an SMU-X industry project between Singapore Management University and SPD Singapore.
+Greetings, and welcome to the code repository for the Beep Beep project.
+
+This project is an SMU-X industry project between Singapore Management University and SPD Singapore.
 
 ## Background
 This project uses IoT to solve a process-related challenge faced by SPD in tracking attendance and temperature scanning of its members during its events.
@@ -22,7 +26,7 @@ Special thanks to Pius Lee for instruction and mentorship through CS462.
 - Web stack: HTML, CSS, Javascript
 - Cloud: Google Firebase and Firestore
 
-##Hardware
+## Hardware
 - [Barcode scanner]()
 
 # Collections
@@ -30,9 +34,8 @@ Collections are how Firebase and Firestore store values in its database. Each co
 
 The following are a list of collections that are used by the Beep Beep app to store data.
 
+### Collection: events
 ```
-## Collection: events
-
 Document ID => {
   eventName => “Name of Event”,
   startDateTime => start_datetime,
