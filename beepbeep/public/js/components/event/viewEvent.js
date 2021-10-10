@@ -1,0 +1,1 @@
+//code for viewing of individual event 

@@ -8,7 +8,6 @@
     //if got header 
     // const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
     const headers = ['name'];
-
     // slice from \n index + 1 to the end of the text
     // use split to create an array of each csv value row
     // str.indexOf("\n") + 1 --> if got header 
