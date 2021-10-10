@@ -1,3 +1,17 @@
+//Initialize Firebase
+var config = {
+  apiKey: "AIzaSyBNQ2ZRxFYd7I42vZZRhFPfqwa4tpKr3ZI",
+  authDomain: "beepbeep-45b71.firebaseapp.com",
+  databaseURL: "https://beepbeep-45b71-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "beepbeep-45b71",
+  storageBucket: "beepbeep-45b71.appspot.com",
+  messagingSenderId: "640515235677",
+  appId: "1:640515235677:web:bce41eb1784d6259b692b4"
+};
+firebase.initializeApp(config);
+
+var db = firebase.firestore();
+
 // for debug purpose
 // $('#exampleModal').modal('toggle')
 
@@ -69,8 +83,8 @@ checkInputs();
 $('#event-form').submit((e) => {
   e.preventDefault();
   // console.log("submitted"); 
-  //get fields 
 
+  //get fields values
   let eventName = document.getElementById('event-name').value;
   let eventDate = document.getElementById('event-date').value; //yy-mm-dd format
   let startTime = document.getElementById('start-time').value; 
@@ -90,7 +104,6 @@ $('#event-form').submit((e) => {
   console.log('duration', duration);
   console.log('file', file);
 
-
   let formData = {
     eventName: eventName, 
     dateTime: dateTime,
@@ -105,13 +118,23 @@ $('#event-form').submit((e) => {
    */
      sendDataToDB = (data) => {
       //if fail, fail message 
-
-      //Upon succes --> generate pdf to download + barcodes + names 
+      db.collection("events").add({
+        attendees: data.names,
+        duration: parseInt(data.duration, 10),
+        eventName: data.eventName,
+        startDateTime: data.dateTime
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      })
+      //Upon success --> generate pdf to download + barcodes + names 
       activatePopup(data);
     }
 
-    createPDF = (barCodeList)=> {
-      
+    createPDF = (barCodeList)=> { 
       let doc = new jsPDF()
       let currentIndex = 1;
       barCodeList.forEach((image, index) => { 

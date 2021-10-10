@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet" />
-
-    <!-- <script type="module" src="/functions/index.js"></script> -->
     
     <!-- JS pdf  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -98,13 +96,13 @@
             </div>
             <div class="modal-body">
     
-              <form name="event-form" id="eventForm" method="POST"> 
+              <form name="event-form" id="event-form" method="POST"> 
     
                 <div class="row"> 
                   <div class="col">
                     <div class="form-group">
                       <label for="event-name" class="col-form-label">Event Name:</label>
-                      <input type="text" class="form-control" id="eventName" name="event-name" autocomplete="off" required>
+                      <input type="text" class="form-control" id="event-name" name="event-name" autocomplete="off" required>
                     </div>                
                   </div>
                   <div class="col">
@@ -123,7 +121,7 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="start-time" class="col-form-label">Start Time :</label>
-                      <input type="time" class="form-control" id="startTime" name="start-time" min="05:00" max="22:00" required>
+                      <input type="time" class="form-control" id="start-time" name="start-time" min="05:00" max="22:00" required>
                     </div>
                   </div>
                   <div class="col">
@@ -156,6 +154,9 @@
         </div>
 
 
+    <!-- Firebase Core -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -176,8 +177,11 @@
     
     <!-- <script type="text/javascript" src="http://www.jqueryscript.net/demo/Simple-jQuery-Based-Barcode-Generator-Barcode/jquery-barcode.js"></script> -->
     
+
+
     <script src="js/components/fileReader.js"></script>
     <script src="js/components/formPopup.js"></script>
+    <!-- <script src = "app.js"></script> -->
     
   </body>
 </html>
