@@ -36,10 +36,18 @@ The following are a list of collections that are used by the Beep Beep app to st
 
 ### Collection: events
 ```
-Document ID => {
-  eventName => “Name of Event”,
-  startDateTime => start_datetime,
-  duration => duration_int,
-  attendees => [attendee_1, attendee_2, … attendee_n]
+eventDocumentId: {
+  eventName: “Name of Event”,
+  startDateTime: date_time,
+  duration: minutes_numerical,
+  attendees: {
+    attendeeId: {
+      attendeeName: “person_name”,
+      round1Attendance: Boolean,
+      round2Attendance: Boolean,
+      round1Temperature: 0,
+round2Temperature: 0,
+    },
+  }
 }
 ```
