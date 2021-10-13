@@ -128,7 +128,7 @@ processDataToDB = (file, formData) => {
         let arrayNames = csvToArray(text);
         formData.names = generateID(arrayNames, formData.eventName)
         
-        createEvent(formData);
+        // createEvent(formData);
       };
       reader.readAsText(input);
     }
@@ -147,7 +147,7 @@ processDataToDB = (file, formData) => {
 
         formData.names = generateID(arrayNames, formData.eventName)
 
-        createEvent(formData);
+        // createEvent(formData);
     };
     reader.readAsArrayBuffer(input);
     }
