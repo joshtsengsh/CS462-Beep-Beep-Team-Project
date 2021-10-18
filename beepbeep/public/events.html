@@ -49,7 +49,7 @@
   <!-- Event Cards -->
   <section class="py-5">
     <div class="container" id="events-component">
-      <div id="card-row" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+      <div id="card-row" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">        
         <div class="col mb-5">
           <div class="card h-100">
             <div class="card-header text-center"><b>Add New Event</b></div>
@@ -70,19 +70,6 @@
             </div>
           </div>
         </div>
-        <div class="col mb-5">
-          <div class="card h-100" id="test-card-access">
-              <div class="card-header text-center"><b>4/10/2021</b></div>
-              <div class="card-body p-4" style="transform: rotate(0);">
-                  <div class="text-center">
-                      <h5 class="fw-bolder">
-                          <a href="#" class="link-unstyled stretched-link">Typing Workshop</a>
-                      </h5>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>
   </section>
 
   <!-- form modal template-->
@@ -202,11 +189,15 @@
     <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF/jspdf.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-    <script
-      src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+
+    <!-- services  -->
+    <script src="js/services/formService.js"></script>
+    <script src="js/services/eventService.js"></script>
+    <!-- <script src = "app.js"></script> -->
 
     <!-- components -->
-
     <!-- formcomponents -->
     <script src="js/components/formPopup/fileReader.js"></script>
     <script src="js/components/formPopup/formPopup.js"></script>
@@ -215,10 +206,8 @@
     <script src="js/components/event/viewEvent.js"></script>
     <script src="js/components/event/eventList.js"></script>
 
-    <!-- services  -->
-    <script src="js/services/formService.js"></script>
-    <script src="js/services/eventService.js"></script>
-    <!-- <script src = "app.js"></script> -->
+    <!-- router -->
+    <script src="js/components/routes/router.js"></script>
 
 
 

@@ -1,44 +1,7 @@
-const events = [
-    {
-      attendees: {
-        0:"Rabbit", 1:"Turtle"
-      },
-      duration: 90,
-      eventName: "The Best, Most Amazing, Glorious Event in History", 
-      startDateTime: Date('01 Jan 2022 10:30:00 AM UTC+8')
-    },
+console.log(events);
 
-    {
-      attendees: {
-        0:"Rabbit", 1:"Turtle"
-      },
-      duration: 90,
-      eventName: "The Best, Most Amazing, Glorious Event in History 2, Electric Bugaloo", 
-      startDateTime: Date('02 Jan 2022 10:30:00 AM  UTC+8')
-    },
-
-    {
-      attendees: {
-        0:"Rabbit", 1:"Turtle"
-      },
-      duration: 120,
-      eventName: "The Best, Most Amazing, Glorious Event in History 3, A Twist in Time", 
-      startDateTime: Date('03 Jan 2022 10:30:00 AM  UTC+8')
-    },
-
-    {
-      attendees: {
-        0:"Rabbit", 1:"Turtle"
-      },
-      duration: 30,
-      eventName: "The Best, Most Amazing, Glorious Event in History 4, Just Stop", 
-      startDateTime: Date('04 Jan 2022 10:30:00 AM  UTC+8')
-    }
-
-  ];
-  
-  events.forEach( event => {
-    const card = `<div class="col mb-5">
+events.forEach( (event, i) => {
+    const card = `<div class="col mb-5" id="${i}">
     <div class="card h-100">
       <div class="card-header text-center"><b>${event.startDateTime}</b></div>
       <div class="card-body p-4" style="transform: rotate(0);">
@@ -59,3 +22,27 @@ const events = [
     ele.innerHTML = card;
     row.appendChild(ele.firstChild);
   })
+
+
+
+/*
+* on click event card, route to event 
+*/
+document.addEventListener("DOMContentLoaded", function(e) {
+    let cards = document.getElementById('card-row'); 
+  
+    for (var i = 0, len = cards.children.length; i < len; i++)
+    {
+        (function(index){
+            cards.children[i].onclick = function(){
+                  // alert(index)  ;
+                  // console.log(index);
+                  //get id of the children if have 
+                  if (cards.children[index].id) {
+                    // console.log(cards.children[index].id);
+                    routeToEvent(cards.children[index].id);
+                  } 
+            }    
+        })(i);
+    }
+  });

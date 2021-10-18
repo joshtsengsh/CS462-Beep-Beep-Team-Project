@@ -1,8 +1,7 @@
-//temp data
-
+// temp data
 let eventData = {
   eventName: 'eventTest',
-  dateTime: '2021-10-14T03:08:00.000Z',
+  startDateTime: '2021-10-14T03:08:00.000Z',
   duration: 90,
   attendees: {
     'eventTest-David': {
@@ -357,3 +356,34 @@ let eventData = {
     }
   }
 }
+
+
+let events = [
+  eventData,
+  {
+    attendees: {
+      0:"Rabbit", 1:"Turtle"
+    },
+    duration: 90,
+    eventName: "The Best, Most Amazing, Glorious Event in History 2, Electric Bugaloo", 
+    startDateTime: Date('02 Jan 2022 10:30:00 AM  UTC+8')
+  },
+
+  {
+    attendees: {
+      0:"Rabbit", 1:"Turtle"
+    },
+    duration: 120,
+    eventName: "The Best, Most Amazing, Glorious Event in History 3, A Twist in Time", 
+    startDateTime: Date('03 Jan 2022 10:30:00 AM  UTC+8')
+  },
+
+  {
+    attendees: {
+      0:"Rabbit", 1:"Turtle"
+    },
+    duration: 30,
+    eventName: "The Best, Most Amazing, Glorious Event in History 4, Just Stop", 
+    startDateTime: Date('04 Jan 2022 10:30:00 AM  UTC+8')
+  }
+];

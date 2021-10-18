@@ -1,8 +1,6 @@
 //code for viewing of individual event 
 
 // render the view here 
-
-
 let table = `
 <div id="single-event-component">
   <button type="button" class="btn btn-primary" id="back-to-events">Back</button>
@@ -34,37 +32,20 @@ let table = `
 </div>
 `
 
-//upon click on the particular card, display this component  
-$('#test-card-access').on('click', function(){
 
-  //replace events-component with single-event-component 
-  document.getElementById('events-component').innerHTML = table;
 
-  //render table 
-  renderTable()
-
-  //render custom buttons 
-  customButtons()
-
-  //if click on back button --> bring them to events page 
-  //force route as of now
-  $('#back-to-events').on('click', () => {
-    window.location.href="events.html";
-  })
-  
-})
 
 /**
  * Render table according to json from DB
  * Input to table shld be in array of json 
  */
-renderTable =() => {
+renderTable =(id) => {
     //render table according to data 
     var $table = $('#table');
     $(function() {
   
-      //mock json as of now
-      let data = eventData.attendees; 
+      //mock json as of now 
+      let data = events[id].attendees; 
       // as of now transform attendees to array --> reason: if not cannot loop in the table 
       let dataArray = Object.values(data); 
 
@@ -72,7 +53,6 @@ renderTable =() => {
       // console.log(dataArray);
       $table.bootstrapTable({data: dataArray})
     })
-    
 }
 
 /**
