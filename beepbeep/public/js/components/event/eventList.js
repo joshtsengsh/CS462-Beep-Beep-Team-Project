@@ -1,4 +1,6 @@
-console.log(events);
+// console.log(events);
+console.log("test");
+
 
 events.forEach( (event, i) => {
     const card = `<div class="col mb-5" id="${i}">

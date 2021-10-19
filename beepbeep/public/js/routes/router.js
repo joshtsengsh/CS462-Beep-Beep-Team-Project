@@ -1,5 +1,5 @@
 const routeToEvent = (id) => {
-  document.title = id; 
+  // console.log(eventName);
   loadEventContent(id)
   window.history.pushState({id}, `${id}`,
                       `/${id}`);
@@ -8,11 +8,6 @@ const routeToEvent = (id) => {
 function loadEventContent(id) {
   console.log("Loading content for {" + id + "}");
   // Update text "Content loading for {id}..."
-  // Here you would do content loading magic...
-  // Perhaps run Fetch API to update resources
-
-  // document.querySelector("#events-component").innerHTML
-    // = 'Content loading for /' + id + '...';
 
   //replace events-component with single-event-component 
   document.getElementById('events-component').innerHTML = table;
