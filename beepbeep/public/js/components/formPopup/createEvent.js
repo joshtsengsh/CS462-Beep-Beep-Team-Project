@@ -2,9 +2,16 @@
 // $('#exampleModal').modal('toggle')
 
 //manual open 'add event popup' 
-$('#addEvent').on('click', function() {
-  $('#exampleModal').modal('show')
-})
+
+const createEventLoaded = () => {
+  $('#addEvent').on('click', function() {
+  
+    console.log('testing');
+    
+    $('#exampleModal').modal('show')
+  })
+
+
 
 //manual close 'add event popup'
 $('#close-event').on('click', function() {
@@ -142,15 +149,18 @@ if (createEventSuccess) {
 // if user click on close  
 $('#close-event').on('click', function() {
   $('#exampleModal').modal('hide')
-  window.location.reload();
+  // window.location.reload();
+  routeToEventsPage();
 })
 
 //if user click outside of modal 
 $('#exampleModal').on('hidden.bs.modal', function (e) {
   $('#exampleModal').modal('hide')
-  window.location.reload();
+  // window.location.reload();
+  routeToEventsPage();
 })
 }
 
 
+} 
 

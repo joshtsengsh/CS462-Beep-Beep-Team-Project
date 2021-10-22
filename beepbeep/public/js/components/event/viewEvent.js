@@ -1,36 +1,104 @@
 //code for viewing of individual event 
-
 // render the view here 
 let table = `
-<div id="single-event-component">
-  <button type="button" class="btn btn-primary" id="back-to-events">Back</button>
+<div> 
+  <div id="single-event-component">
+    <button type="button" class="btn btn-primary" id="back-to-events">Back</button>
+    <table id="table"
+    data-search="true"
+    data-buttons="customButtons"
+    data-pagination="true"
+    data-page-size="10"
+    data-page-list="[10, 25, 50, 100]"
+    >
+      <thead>
+        <tr>
+          <th data-field="editButton" rowspan="2" class="editButtons">Edit</th>
+          <th data-field="attendeeName" data-sortable="true" rowspan="2">Namelist</th>
+          <th colspan="2">Attendance One</th>
+          <th colspan="2">Attendance Two</th>
+        </tr>
+        <tr>
+          <th data-field="round1Attendance" data-sortable="true">Arrived ?</th>
+          <th data-field="round1Temperature" data-sortable="true">Temp</th>
+          <th data-field="round2Attendance" data-sortable="true">Arrived ?</th>
+          <th data-field="round2Temperature" data-sortable="true">Temp</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 
-  <table id="table"
-  data-search="true"
-  data-buttons="customButtons"
-  data-pagination="true"
-  data-page-size="10"
-  data-page-list="[10, 25, 50, 100]"
-  >
-    <thead>
-      <tr>
-        <th data-field="editButton" rowspan="2" class="editButtons">Edit</th>
-        <th data-field="attendeeName" data-sortable="true" rowspan="2">Namelist</th>
-        <th colspan="2">Attendance One</th>
-        <th colspan="2">Attendance Two</th>
-      </tr>
-      
-      <tr>
-        <th data-field="round1Attendance" data-sortable="true">Arrived ?</th>
-        <th data-field="round1Temperature" data-sortable="true">Temp</th>
-        <th data-field="round2Attendance" data-sortable="true">Arrived ?</th>
-        <th data-field="round2Temperature" data-sortable="true">Temp</th>
-      </tr>
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-edit" onclick="closeEditPopup()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-    </thead>
-  </table>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="edit-participant-name" class="col-form-label">Name :</label>
+            <input type="text" class="form-control" id="edit-participant-name">
+          </div>
+
+          <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="attOne" class="col-form-label">Attendance 1</label>
+                  <select class="custom-select" id="attOne" name="attOne" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-group">
+                  <label for="tempOne" class="col-form-label">Temperature 1 (°C) :</label>
+                  <input type="text" class="form-control" id="tempOne" name="tempOne" autocomplete="off" required>
+                </div>
+              </div>
+            </div> 
+
+
+            <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="attTwo" class="col-form-label">Attendance 2 </label>
+                <select class="custom-select" id="attTwo" name="attTwo" required>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="tempTwo" class="col-form-label">Temperature 2 (°C) :</label>
+                <input type="text" class="form-control" id="tempTwo" name="tempTwo" autocomplete="off" required>
+              </div>
+            </div>
+          </div> 
+
+
+            <div class="form-group text-center" >
+            <button type="submit" id="update-participant" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
 </div>
 `
+
+{/* <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEdit">Close</button> */}
+
 
 /**
  * Render table according to json from DB
@@ -47,6 +115,7 @@ renderTable =(eventNo) => {
       
       let data = events[eventNo].attendees; 
 
+
       //for visuals only 
       $table.bootstrapTable({data: transFormToTableVisual(data)})
     })
@@ -55,14 +124,11 @@ renderTable =(eventNo) => {
 /**
  * Listen editButton class
  */
-
-
-editFormPopup = (id) => {
-  console.log(id);
-  //render editFormPopup
+editFormPopup = (participantData) => {
+  console.log(participantData);
+  
+  renderEditParticipantPopup(participantData); 
 }
-
-
 
 /**
  * 
@@ -82,14 +148,36 @@ transFormToTableVisual = (data) => {
   //add id in 
   dataArray.map((m, i) => m['id'] = dataIdArray[i]); 
 
+  dataArray.map((m => {
+    if (m.round1Attendance == false ){
+      m.round1Attendance = "No"
+    } 
+
+    if (m.round2Attendance == false ){
+      m.round2Attendance = "No"
+    } 
+
+    if (m.round1Temperature == 0 ){
+      m.round1Temperature = "NA"
+    }
+
+    if (m.round2Temperature == 0 ){
+      m.round2Temperature = "NA"
+    }
+  }))
+
   //add edit button in with participant id as id 
-  dataArray.map((m) => m['editButton'] = `
-      <button type="button" class="btn btn-success" id="${m.id}" onclick="editFormPopup(${JSON.stringify(m)})"><i class="fas fa-edit"></i></button>
-    `)
+  dataArray.map((m) => m.editButton = "")
+  
+  dataArray.map((m) => m.editButton = `<button type="button" class="btn btn-success" id="${m.id}" onclick='editFormPopup(${JSON.stringify(m)})'><i class="fas fa-edit"></i></button>`)
 
   console.log(dataArray);
 
-    return dataArray; 
+  return dataArray; 
+}
+
+closeEditPopup = () => {
+  $('#editModal').modal('hide');
 }
 
 
@@ -137,3 +225,24 @@ customButtons = () => {
   }
 }
 
+
+function loadEventPageContent(id) {
+  console.log("Loading content for {" + id + "}");
+  // Update text "Content loading for {id}..."
+
+  //replace events-component with single-event-component 
+  document.getElementById('events-component').innerHTML = table;
+
+  //render table 
+  renderTable(id)
+
+  //render custom buttons 
+  customButtons()
+
+  //if click on back button --> bring them to events page 
+  //force route as of now
+  $('#back-to-events').on('click', () => {
+    // window.location.href="events";
+    routeToEventsPage();
+  })
+}

@@ -1,26 +1,28 @@
-const routeToEvent = (id) => {
+const routeToEventPage = (id) => {
   // console.log(eventName);
-  loadEventContent(id)
+  console.log("testing");
+  
+  loadEventPageContent(id)
   window.history.pushState({id}, `${id}`,
                       `/${id}`);
 }
 
-function loadEventContent(id) {
-  console.log("Loading content for {" + id + "}");
-  // Update text "Content loading for {id}..."
+const routeToEventsPage = () => {
+  let pageName = 'events'
 
-  //replace events-component with single-event-component 
-  document.getElementById('events-component').innerHTML = table;
+  loadEventsPageContent(); 
 
-  //render table 
-  renderTable(id)
+  window.history.pushState({pageName}, pageName,
+  `/${pageName}`);
+}
 
-  //render custom buttons 
-  customButtons()
 
-  //if click on back button --> bring them to events page 
-  //force route as of now
-  $('#back-to-events').on('click', () => {
-    window.location.href="events.html";
-  })
+const routeToHomePage = () => {
+  let pageName = 'home'
+
+  window.location.href = "index.html";
+
+  window.history.pushState({pageName}, pageName,
+    `/`);
+  
 }
