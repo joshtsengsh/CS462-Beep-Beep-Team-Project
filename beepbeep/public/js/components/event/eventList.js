@@ -4,7 +4,7 @@ const loadEventsPageContent = () => {
   <section class="py-5" id="section">
     <div class="container" id="events-component">
       <div id="card-row" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">        
-        <div class="col mb-5">
+        <div class="col mb-5" style="padding-top: 10px;">
           <div class="card h-100">
             <div class="card-header text-center"><b>Add New Event</b></div>
             <div class="card-body p-4" style="transform: rotate(0);">
@@ -127,21 +127,25 @@ const renderEventCards = () => {
   
     let startTime = dateObj.toLocaleString('en-SG', { hour: 'numeric', minute: 'numeric', hour12: true })
   
-      const card = `<div class="col mb-5" id="${i}">
-      <div class="card h-100">
-        <div class="card-header text-center"><b>${date}</b></div>
-        <div class="card-body p-4" style="transform: rotate(0);">
-          <div class="text-center">
+      const card = `<div class="col mb-6" style="padding-top: 10px;" id="${i}">
+      <div class="card h-100 text-center">
+        <div class="card-header ">
+        <div class="row">
+        <div class= "col"><b>${date}</b></div>
+        <div class= "col"><b>${startTime}</b></div>
+        </div>
+        </div>
+        <div class="card-body  card-body p-4 align-items-center d-flex justify-content-center" style="transform: rotate(0);">
             <h5 class="fw-bolder justify-content-center">
               <a href="#" class="link-unstyled stretched-link">
               <p>${event.eventName}</p>
-              <p>StartTime: ${startTime}</p>
-              <p>Duration: ${event.duration}min</p>
               </a>
-  
             </h5>
-          </div>
+          
         </div>
+        <div class="card-footer text-muted">
+          Duration: ${event.duration}min
+          </div>
       </div>
     </div>`
       const row = cardContainer = document.getElementById('card-row');
