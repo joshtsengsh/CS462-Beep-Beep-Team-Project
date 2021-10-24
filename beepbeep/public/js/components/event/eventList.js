@@ -10,7 +10,7 @@ const loadEventsPageContent = () => {
             <div class="card-body p-4" style="transform: rotate(0);">
               <div class="text-center">
                 <h5 class="fw-bolder">
-                  <!-- data-target="#exampleModal" -->
+                  <!-- data-target="#createEventModal" -->
                   <a class="link-unstyled stretched-link" href="" data-toggle="modal" id="addEvent"
                     class="link-unstyled stretched-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
@@ -27,12 +27,12 @@ const loadEventsPageContent = () => {
   </section>
 
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="createEventModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
+          <h5 class="modal-title" id="createEventModalLabel">Create Event</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-event">
             <span aria-hidden="true">&times;</span>
           </button>

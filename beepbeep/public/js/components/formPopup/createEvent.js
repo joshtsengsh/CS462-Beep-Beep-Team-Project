@@ -1,5 +1,5 @@
 // for debug purpose
-// $('#exampleModal').modal('toggle')
+// $('#createEventModal').modal('toggle')
 
 //manual open 'add event popup' 
 
@@ -8,14 +8,14 @@ const createEventLoaded = () => {
   
     console.log('testing');
     
-    $('#exampleModal').modal('show')
+    $('#createEventModal').modal('show')
   })
 
 
 
 //manual close 'add event popup'
 $('#close-event').on('click', function() {
-  $('#exampleModal').modal('hide')
+  $('#createEventModal').modal('hide')
 })
 
 //show file name on file label upon upload
@@ -104,7 +104,7 @@ activatePopup = (data, createEventSuccess) => {
       <div class="modal-header">
       
         <div class="col-1"></div>
-        <div class="col-10 text-center"><h5 class="modal-title" id="exampleModalLongTitle"></h5></div>
+        <div class="col-10 text-center"><h5 class="modal-title" id="createEventModalLongTitle"></h5></div>
         <div class="col-1 ms-3">
           <button type="button" class="close" data-dismiss="modal" id="close-event" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -120,11 +120,11 @@ activatePopup = (data, createEventSuccess) => {
 </div>
 `
 
-document.getElementById('exampleModal').innerHTML = str 
+document.getElementById('createEventModal').innerHTML = str 
 
 //if success
 if (createEventSuccess) {
-  document.getElementById('exampleModalLongTitle').innerHTML = 'Event Created !'
+  document.getElementById('createEventModalLongTitle').innerHTML = 'Event Created !'
   document.getElementById('barcode').innerHTML = `
   <button type="submit" id="download-barcodes" class="btn btn-primary ">Download Barcodes</button>`
   
@@ -140,7 +140,7 @@ if (createEventSuccess) {
   })
   } else {
   //if fail 
-  document.getElementById('exampleModalLongTitle').innerHTML = 'Failed to create event!'
+  document.getElementById('createEventModalLongTitle').innerHTML = 'Failed to create event!'
   document.getElementById('barcode').innerHTML = `<h4>Please try again</h4>`
 }
 
@@ -148,14 +148,14 @@ if (createEventSuccess) {
 //after closing, force reload to reset modal to form format 
 // if user click on close  
 $('#close-event').on('click', function() {
-  $('#exampleModal').modal('hide')
+  $('#createEventModal').modal('hide')
   // window.location.reload();
   routeToEventsPage();
 })
 
 //if user click outside of modal 
-$('#exampleModal').on('hidden.bs.modal', function (e) {
-  $('#exampleModal').modal('hide')
+$('#createEventModal').on('hidden.bs.modal', function (e) {
+  $('#createEventModal').modal('hide')
   // window.location.reload();
   routeToEventsPage();
 })
