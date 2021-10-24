@@ -385,5 +385,23 @@ let events = [
     duration: 30,
     eventName: "The Best, Most Amazing, Glorious Event in History 4, Just Stop", 
     startDateTime: Date('04 Jan 2022 10:30:00 AM  UTC+8')
+  },
+
+  {
+    attendees: {
+      0:"Rabbit", 1:"Turtle"
+    },
+    duration: 30,
+    eventName: "Event A", 
+    startDateTime: Date('04 Jan 2022 10:30:00 AM  UTC+8')
+  },
+
+  {
+    attendees: {
+      0:"Rabbit", 1:"Turtle"
+    },
+    duration: 120,
+    eventName: "Event B", 
+    startDateTime: Date('04 Jan 2022 10:30:00 AM  UTC+8')
   }
 ];

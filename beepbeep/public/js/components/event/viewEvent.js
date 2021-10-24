@@ -93,7 +93,30 @@ let table = `
     </div>
   </div>
   </div>
+</div>
 
+<div class="modal fade" id="recordingModal" tabindex="-1" aria-labelledby="recordingModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="recordingModalLabel">Scan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="attendanceInput" class="form-label">Attendance</label>
+                <input type="text" class="form-control" id="temperature" placeholder="Please Scan Barcode">
+            </div>
+            <div class="mb-3">
+                <label for="temperatureInput" class="form-label">Temperature</label>
+                <input type="text" class="form-control" id="temperature" placeholder="Please Scan Temperature">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="save-record">Save changes</button>
+        </div>
+    </div>
+</div>
 </div>
 `
 
@@ -121,14 +144,6 @@ renderTable =(eventNo) => {
     })
 }
 
-/**
- * Listen editButton class
- */
-editFormPopup = (participantData) => {
-  console.log(participantData);
-  
-  renderEditParticipantPopup(participantData); 
-}
 
 /**
  * 
@@ -216,6 +231,7 @@ customButtons = () => {
       icon: 'fas fa-play',
       event: function () {
         console.log('start recording');
+        recordingPopup();
         //inject services function here from eventServices
       },
       attributes: {
@@ -223,6 +239,20 @@ customButtons = () => {
       }
     },
   }
+}
+
+
+/**
+ * Listen startRecording class
+ */
+ recordingPopup = () => {
+  console.log("Recording");
+  
+  openRecordingPopup(); 
+}
+
+openRecordingPopup = () => {
+  $('#recordingModal').modal('show');
 }
 
 
