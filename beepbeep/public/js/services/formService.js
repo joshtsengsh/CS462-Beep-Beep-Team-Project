@@ -1,22 +1,4 @@
 /**
- * CRUD to DB, 
- */
-
-//Initialize Firebase
-var config = {
-  apiKey: "AIzaSyBNQ2ZRxFYd7I42vZZRhFPfqwa4tpKr3ZI",
-  authDomain: "beepbeep-45b71.firebaseapp.com",
-  databaseURL: "https://beepbeep-45b71-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "beepbeep-45b71",
-  storageBucket: "beepbeep-45b71.appspot.com",
-  messagingSenderId: "640515235677",
-  appId: "1:640515235677:web:bce41eb1784d6259b692b4"
-};
-firebase.initializeApp(config);
-
-var db = firebase.firestore();
-
-/**
  * Send valid data to db 
  * Input: formData json
  * Upon success, modal popup, download pdf of barcodes and names  

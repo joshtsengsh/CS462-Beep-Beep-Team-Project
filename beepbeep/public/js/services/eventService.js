@@ -1,4 +1,15 @@
 // temp data
+
+db.collection("events")
+  .onSnapshot((snapshot) => {
+    var events = [];
+    snapshot.forEach((doc) => {
+      events.push(doc.data());
+    })
+    console.log(events)
+  });
+  
+
 let eventData = {
   eventName: 'eventTest',
   startDateTime: '2021-10-14T03:08:00.000Z',
