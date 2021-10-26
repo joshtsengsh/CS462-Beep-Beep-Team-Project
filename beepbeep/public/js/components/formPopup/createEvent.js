@@ -130,9 +130,16 @@ if (createEventSuccess) {
   
   $('#download-barcodes').on('click', function() {
     let barcode = [];
-    data.names.forEach((d) => (
-      barcode.push(textToBase64Barcode(d.ID))
-    ))
+    console.log(data.names);
+    console.log('testing');
+    for (let key in data.names) {
+      if (data.names.hasOwnProperty(key)) {
+        barcode.push(textToBase64Barcode(key))
+      }
+    }
+    // data.names.forEach((d) => (
+    //   barcode.push(textToBase64Barcode(d.ID))
+    // ))
     //once all process, create barcode pdf and download
     if (barcode.length != 0) {
       createPDF(barcode)

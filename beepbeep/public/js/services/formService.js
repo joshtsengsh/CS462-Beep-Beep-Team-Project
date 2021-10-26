@@ -8,10 +8,10 @@ createEvent = (data) => {
 
 let createEventSuccess = false; 
 db.collection("events").add({
-  attendees: data.names,
   duration: parseInt(data.duration, 10),
   eventName: data.eventName,
-  startDateTime: data.dateTime
+  startDateTime: data.dateTime,
+  attendees: data.names
 })
 .then((docRef) => {
   console.log("Document written with ID: ", docRef.id);
@@ -56,13 +56,23 @@ db.collection("events").add({
   // let dateTime_ = dateTime.toString().replace(/ /g,"-");
   // console.log(dateTime.toDateString());
   // console.log(dateTime.toLocaleTimeString());
-  
+
+  let outputAttendeesObj = {} 
   arrayNames.forEach(element => {
     //spaces as seperator for now 
-    element['ID'] = eventName_ + '-' + element.name
+    // element['ID'] = eventName_ + '-' + element.name
+    let id = eventName_ + '-' + element.name; 
+
+    outputAttendeesObj[id] = {
+          attendeeName: element.name, 
+          round1Attendance: false,
+          round2Attendance: false,
+          round1Temperature: 0,
+          round2Temperature: 0,
+      }
   });
 
-  return arrayNames;
+  return outputAttendeesObj;
 }
 
 

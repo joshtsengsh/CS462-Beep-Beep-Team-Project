@@ -1,5 +1,5 @@
 //render when on click edit, get data of participant, populate the form with the details 
-renderEditParticipantPopup = (participantData) => {
+const editFormPopup = (participantData) => {
 
   $('#editModal').modal('show');
 

@@ -121,8 +121,8 @@ const loadEventsPageContent = () => {
 const renderEventCards = () => {
   events.forEach( (event, i) => {
 
-    let dateObj = new Date (event.startDateTime); 
-  
+    let dateObj = new Date (event.startDateTime.seconds); 
+
     let date = dateObj.toLocaleDateString();
   
     let startTime = dateObj.toLocaleString('en-SG', { hour: 'numeric', minute: 'numeric', hour12: true })
