@@ -103,9 +103,18 @@ let table = `
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value = 1 checked="checked">
+              <label class="custom-control-label" for="customRadio1">Attendance 1</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" value = 2>
+              <label class="custom-control-label" for="customRadio2">Attendance 2</label>
+            </div>
+            <br>
             <div class="mb-3">
-                <label for="attendanceInput" class="form-label">Attendance</label>
-                <input type="text" class="form-control" id="temperature" placeholder="Please Scan Barcode">
+                <label for="attendanceInput" class="form-label">Name</label>
+                <input type="text" class="form-control" id="attendance" placeholder="Please Scan Barcode">
             </div>
             <div class="mb-3">
                 <label for="temperatureInput" class="form-label">Temperature</label>
@@ -113,7 +122,7 @@ let table = `
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="save-record">Save changes</button>
+            <button type="button" onclick="submitRecord()" class="btn btn-primary" id="save-record" >Save changes</button>
         </div>
     </div>
 </div>
@@ -232,5 +241,38 @@ customButtons = (data) => {
       }
     },
   }
+}
+
+
+
+function submitRecord() {
+  console.log("submitting temperature and attendance");
+  const attendanceData = document.getElementById( "attendance").value;
+  const temperatureData = document.getElementById( "temperature").value;
+  let attendanceRound = 1;
+  if(document.getElementById('customRadio1').checked) {
+    //Attendance 2 radio button is checked
+    attendanceRound = 1;
+
+  }else if(document.getElementById('customRadio2').checked) {
+    //Attendance 2 radio button is checked
+    attendanceRound = 2;
+  }
+  // reminder to change to integer values for relevant data
+  let data = {
+    "participantId": attendanceData,
+    "temp": temperatureData,
+    "eventId": "1RqAByun8GAof9MCc7Mu",
+    "attendanceRound": attendanceRound
+
+  }
+  console.log(data)
+
+  //replace events-component with single-event-component 
+  // document.getElementById('save-record').innerHTML = table;
+  // document.getElementById('save-record');
+
+  //if click on back button --> bring them to events page 
+  //force route as of now
 }
 
