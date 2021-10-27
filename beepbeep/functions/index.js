@@ -6,27 +6,34 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
+
+var allowedOrigins = ['https://beepbeep-45b71.web.app', 'https://beepbeep-45b71.firebaseapp.com', 'http://localhost:5000/', 'null'];
+
+//const db = mongoose.connection;
+
+app.use(cors({
+    origin: true
+}));
+
+// app.options('*', cors());
+
 admin.initializeApp();
 
 const firestore = admin.firestore();
 
-// Automatically allow cross-origin requests
-app.use(cors({ origin: "*" }));
-
-// Expose Express API as a single Cloud Function:
-exports.widgets = functions.https.onRequest(app);
+// // Automatically allow cross-origin requests
+// app.use(cors());
 
 // build multiple CRUD interfaces:
 app.get('/:id', (req, res) => res.send(Widgets.getById(req.params.id)));
 app.post('/', (req, res) => res.send(Widgets.create()));
-app.get('/', (req, res) => res.send(Widgets.getAllEvents()));
-app.patch('/', (req, res) => res.send(Widgets.updateParticipant()));
-
-let eventsCollection = firestore.collection("events"); 
+app.get('/',(req, res) => res.send(Widgets.getAllEvents()));
+app.patch('/', (req, res) => res.send(Widgets.recordParticipant()));
 
 // Adds new event
-exports.addEvent = functions.https.onRequest( (req, res) => {
+exports.addEvent = functions.region('asia-southeast1').https.onRequest( (req, res) => {
     //console.log(req.query);
+    cors()(req, res, () => {
     const eventName = req.body.eventName;
     const startDateTime = req.body.startDateTime;
     const duration = req.body.duration;
@@ -51,7 +58,7 @@ exports.addEvent = functions.https.onRequest( (req, res) => {
     // console.log(attendeesList);
     
     // Push the new entry into Firestore using the Firebase Admin SDK
-    res.set('Access-Control-Allow-Origin', '*');
+    // res.set('Access-Control-Allow-Origin', '*');
     const writeResult = admin.firestore().collection("events").add({
       eventName: eventName,
       startDateTime: startDateTime,
@@ -59,14 +66,19 @@ exports.addEvent = functions.https.onRequest( (req, res) => {
       attendees: attendees,
     });
     
-    console.log("Uploading...");
-    
     // Send back a message that we've successfully written to db
-    res.json({result: `Message with ID: ${writeResult.id} added.`});
+    // res.json({result: `Message with ID: ${writeResult.id} added.`});
+
+        console.log("Uploading...");
+        // return res.json({status: 'ok'});
+        // console.log("Sending to client...");
+        // return res.json(output);
+        return res.json({result: `Message with ID: ${writeResult.id} added.`});
+    });
 });
 
 // Get all events
-exports.getAllEvents = functions.https.onRequest( (req, res) => {
+exports.getAllEvents = functions.region('asia-southeast1').https.onRequest( (req, res) => {
     let output = [];
     
     firestore.collection("events").get().then((querySnapshot) => {
@@ -77,17 +89,31 @@ exports.getAllEvents = functions.https.onRequest( (req, res) => {
             eventData: doc.data(),
             //doc.id, " => ", doc.data();
         }
-        console.log(row);
+        // console.log(row);
         output.push(row);
     });
-    console.log("Sending to client...");
-    res.json(output);
+    // res.set('Access-Control-Allow-Origin', '*');
+
+
+    cors()(req, res, () => {
+        // return res.json({status: 'ok'});
+
+        console.log("Sending to client...");
+        return res.json(output);
+    });
+
+    // console.log("Sending to client...");
+    // res.json(output);
     });
 });
 
 
-exports.updateParticipant = functions.https.onRequest((req, res) => {
+/**
+ * For recording of participants
+ */
+exports.recordParticipant = functions.region('asia-southeast1').https.onRequest((req, res) => {
 
+    cors()(req, res, () => {
     let eventId = req.body.eventId;
     let participantId = req.body.participantId;
     let temp = req.body.temp;
@@ -116,12 +142,18 @@ exports.updateParticipant = functions.https.onRequest((req, res) => {
 
             doc.ref.update({attendees : eventData.attendees})
         });
-        console.log("Sending to client...");
+        // console.log("Sending to client...");
         // once get the single --> find the id ! 
         //update it ! 
-        res.json('updated');
+
+            // return res.json({status: 'ok'});
+            console.log("Sending to client...");
+            return res.json(`${participantId}, round ${attendanceRound} recorded`);
+        });
+        // res.json('updated');
     });
 })
 
 
-
+// Expose Express API as a single Cloud Function:
+exports.widgets = functions.region('asia-southeast1').https.onRequest(app);

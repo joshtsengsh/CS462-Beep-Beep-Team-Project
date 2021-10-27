@@ -12,6 +12,7 @@ const editFormPopup = (participantData) => {
 
   document.getElementById('attTwo').value = participantData.round2Attendance != "No" ? "Yes": "No";
   document.getElementById('tempTwo').value = participantData.round2Temperature; 
+
 }
 
 //close modal 
@@ -21,10 +22,29 @@ $('#close-edit').on('click', function() {
 })
 
 
-$('#update-participant').on('click', function() {
+
+function editParticipantData() {
   console.log("send data");
-  // $('#editModal').modal('hide');
-})
+
+  let name = document.getElementById('edit-participant-name').value; 
+
+  let attOne = document.getElementById('attOne').value;
+  let tempOne = document.getElementById('tempOne').value; 
+
+  let attTwo = document.getElementById('attTwo').value;
+  let tempTwo = document.getElementById('tempTwo').value; 
+
+  let data = {
+    name: name, 
+    attOne: attOne, 
+    tempOne: tempOne, 
+    attTwo: attTwo, 
+    tempTwo: tempTwo
+  }
+  editParticipantsData(data);
+  console.log(data);
+  $('#editModal').modal('hide');
+}
 
 closeEditParticipantModal = () => {
 

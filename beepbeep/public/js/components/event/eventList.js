@@ -120,13 +120,12 @@ const loadEventsPageContent = () => {
 
 const renderEventCards = () => {
   events.forEach( (event, i) => {
-
-    let dateObj = new Date (event.startDateTime.seconds); 
+    let dateObj = new Date (event.eventData.startDateTime); 
 
     let date = dateObj.toLocaleDateString();
   
     let startTime = dateObj.toLocaleString('en-SG', { hour: 'numeric', minute: 'numeric', hour12: true })
-  
+
       const card = `<div class="col mb-6" style="padding-top: 10px;" id="${i}">
       <div class="card h-100 text-center">
         <div class="card-header ">
@@ -138,13 +137,13 @@ const renderEventCards = () => {
         <div class="card-body  card-body p-4 align-items-center d-flex justify-content-center" style="transform: rotate(0);">
             <h5 class="fw-bolder justify-content-center">
               <a href="#" class="link-unstyled stretched-link">
-              <p>${event.eventName}</p>
+              <p>${event.eventData.eventName}</p>
               </a>
             </h5>
           
         </div>
         <div class="card-footer text-muted">
-          Duration: ${event.duration}min
+          Duration: ${event.eventData.duration}min
           </div>
       </div>
     </div>`
