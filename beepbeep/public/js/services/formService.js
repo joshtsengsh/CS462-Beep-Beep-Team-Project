@@ -1,34 +1,3 @@
-/**
- * Send valid data to db 
- * Input: formData json
- * Upon success, modal popup, download pdf of barcodes and names  
- */
-createEvent = (data) => {
-//if fail, fail message 
-
-let createEventSuccess = false; 
-db.collection("events").add({
-  duration: parseInt(data.duration, 10),
-  eventName: data.eventName,
-  startDateTime: data.dateTime,
-  attendees: data.names
-})
-.then((docRef) => {
-  console.log("Document written with ID: ", docRef.id);
-  createEventSuccess = true; 
-  //Upon success --> generate pdf to download + barcodes + names 
-  activatePopup(data, createEventSuccess);
-})
-.catch((error) => {
-  console.error("Error adding document: ", error);
-  createEventSuccess = false; 
-  //Upon failure --> fail message 
-  activatePopup(data, createEventSuccess);
-})
-
-}
-
-
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 // biz logic, helpful functions
@@ -151,6 +120,20 @@ readCsv = () => {
 }
 
 
-
+const downloadBarcodes = (data) => {
+  let barcode = [];
+  for (let key in data.names) {
+    if (data.names.hasOwnProperty(key)) {
+      barcode.push(textToBase64Barcode(key))
+    }
+  }
+  // data.names.forEach((d) => (
+  //   barcode.push(textToBase64Barcode(d.ID))
+  // ))
+  //once all process, create barcode pdf and download
+  if (barcode.length != 0) {
+    createPDF(barcode)
+  } 
+}
 
 

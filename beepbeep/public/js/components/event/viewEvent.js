@@ -127,16 +127,12 @@ let table = `
  * Render table according to json from DB
  * Input to table shld be in array of json 
  */
-renderTable =(eventNo) => {
+renderTable =(data) => {
     //render table according to data 
     var $table = $('#table');
     $(function() {
   
-      //mock json as of now 
 
-      document.title = events[eventNo].eventName;
-      
-      let data = events[eventNo].attendees; 
 
 
       //for visuals only 
@@ -186,8 +182,6 @@ transFormToTableVisual = (data) => {
   
   dataArray.map((m) => m.editButton = `<button type="button" class="btn btn-success" id="${m.id}" onclick='editFormPopup(${JSON.stringify(m)})'><i class="fas fa-edit"></i></button>`)
 
-  console.log(dataArray);
-
   return dataArray; 
 }
 
@@ -202,7 +196,7 @@ closeEditPopup = () => {
  * Print Barcode
  * Start attendance taking 
  */
-customButtons = () => {
+customButtons = (data) => {
   return {
     downloadSheet: {
       text: 'Download Sheet',
@@ -220,7 +214,6 @@ customButtons = () => {
       icon: 'fas fa-barcode',
       event: function () {
         console.log('Print barcode of participants');
-        //inject services function here from eventServices
       },
       attributes: {
         title: 'Print barcodes'
@@ -241,38 +234,3 @@ customButtons = () => {
   }
 }
 
-
-/**
- * Listen startRecording class
- */
- recordingPopup = () => {
-  console.log("Recording");
-  
-  openRecordingPopup(); 
-}
-
-openRecordingPopup = () => {
-  $('#recordingModal').modal('show');
-}
-
-
-function loadEventPageContent(id) {
-  console.log("Loading content for {" + id + "}");
-  // Update text "Content loading for {id}..."
-
-  //replace events-component with single-event-component 
-  document.getElementById('events-component').innerHTML = table;
-
-  //render table 
-  renderTable(id)
-
-  //render custom buttons 
-  customButtons()
-
-  //if click on back button --> bring them to events page 
-  //force route as of now
-  $('#back-to-events').on('click', () => {
-    // window.location.href="events";
-    routeToEventsPage();
-  })
-}

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    #terminal {
+      height: 90vh;
+    }
+    .options {
+      height: 10vh;
+      padding: 15px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="options">
+    <label for="ports">Port:</label>
+    <select id="ports">
+      <option value="prompt">Add a port...</option>
+    </select>
+    <button id="connect">Connect</button>
+    <label for="baudrate">Baud rate:</label>
+    <select id="baudrate">
+      <option value="9600">9600</option>
+      <!-- <option value="14400">14400</option>
+      <option value="19200">19220</option>
+      <option value="28800">28800</option>
+      <option value="38400">38400</option>
+      <option value="57600">57600</option>
+      <option value="115200" selected>115200</option>
+      <option value="230400">230400</option>
+      <option value="460800">460800</option>
+      <option value="921600">921600</option>
+      <option value="custom">Custom</option> -->
+    </select>
+    </br>
+    <input id="custom_baudrate" type="number" min="1" placeholder="Enter baudrate..." hidden>
+    <label for="databits">Data bits:</label>
+    <select id="databits">
+      <option value="7">7</option>
+      <option value="8" selected>8</option>
+    </select>
+    <label for="parity">Parity:</label>
+    <select id="parity">
+      <option value="none" selected>None</option>
+      <option value="even">Even</option>
+      <option value="odd">Odd</option>
+    </select>
+    <label for="stopbits">Stop bits:</label>
+    <select id="stopbits">
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+    </select>
+    <input id="rtscts" type="checkbox">
+    <label for="rtscts">Hardware flow control</label>
+    <input id="echo" type="checkbox">
+    <label for="echo">Local echo</label>
+    <input id="enter_flush" type="checkbox">
+    <label for="enter_flush">Flush on enter</label>
+    <input id="convert_eol" type="checkbox">
+    <button id="download">Download output</button>
+    <label for="convert_eol">Convert EOL</label>
+
+  </div>
+  <div id="terminal"></div>
+
+  <script>
+
+
+// declare class PortOption extends HTMLOptionElement {
+//   port: SerialPort | SerialPortPolyfill;
+// }
+
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', async () => {
+//     try {
+//       const registration = await navigator.serviceWorker.register(
+//           'service-worker.js', {scope: '.'});
+//       console.log('SW registered: ', registration);
+//     } catch (registrationError) {
+//       console.log('SW registration failed: ', registrationError);
+//     }
+//   });
+// }
+
+let portSelector;
+let connectButton;
+let baudRateSelector;
+let customBaudRateInput;
+let dataBitsSelector;
+let paritySelector;
+let stopBitsSelector;
+let flowControlCheckbox;
+let echoCheckbox;
+let flushOnEnterCheckbox;
+
+let portCounter = 1;
+let port;
+let reader;
+
+const urlParams = new URLSearchParams(window.location.search);
+const usePolyfill = urlParams.has('polyfill');
+
+// const term = new Terminal({
+//   scrollback: 10_000,
+// });
+// const fitAddon = new FitAddon();
+// term.loadAddon(fitAddon);
+const encoder = new TextEncoder();
+let toFlush = '';
+// term.onData((data) => {
+//   if (echoCheckbox.checked) {
+//     term.writeUtf8(encoder.encode(data));
+//   }
+
+//   if (port?.writable == null) {
+//     console.warn(`unable to find writable port`);
+//     return;
+//   }
+
+//   const writer = port.writable.getWriter();
+
+//   if (flushOnEnterCheckbox.checked) {
+//     toFlush += data;
+//     if (data === '\r') {
+//       writer.write(encoder.encode(toFlush));
+//       writer.releaseLock();
+//       toFlush = '';
+//     }
+//   } else {
+//     writer.write(encoder.encode(data));
+//   }
+
+//   writer.releaseLock();
+// });
+
+/**
+ * Returns the option corresponding to the given SerialPort if one is present
+ * in the selection dropdown.
+ *
+ * @param {SerialPort} port the port to find
+ * @return {PortOption}
+ */
+function findPortOption(port) {
+  for (let i = 0; i < portSelector.options.length; ++i) {
+    const option = portSelector.options[i];
+    if (option.value === 'prompt') {
+      continue;
+    }
+    const portOption = option;
+    if (portOption.port === port) {
+      return portOption;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Adds the given port to the selection dropdown.
+ *
+ * @param {SerialPort} port the port to add
+ * @return {PortOption}
+ */
+function addNewPort(port) {
+  const portOption = document.createElement('option');
+  portOption.textContent = `Port ${portCounter++}`;
+  portOption.port = port;
+  portSelector.appendChild(portOption);
+  return portOption;
+}
+
+/**
+ * Adds the given port to the selection dropdown, or returns the existing
+ * option if one already exists.
+ *
+ * @param {SerialPort} port the port to add
+ * @return {PortOption}
+ */
+function maybeAddNewPort(port){
+  const portOption = findPortOption(port);
+  if (portOption) {
+    return portOption;
+  }
+
+  return addNewPort(port);
+}
+
+/**
+ * Sets |port| to the currently selected port. If none is selected then the
+ * user is prompted for one.
+ */
+async function getSelectedPort() {
+  if (portSelector.value == 'prompt') {
+    try {
+      const serial = usePolyfill ? polyfill : navigator.serial;
+      port = await serial.requestPort({});
+    } catch (e) {
+      return;
+    }
+    const portOption = maybeAddNewPort(port);
+    portOption.selected = true;
+  } else {
+    const selectedOption = portSelector.selectedOptions[0];
+    port = selectedOption.port;
+  }
+}
+
+/**
+ * @return {number} the currently selected baud rate
+ */
+function getSelectedBaudRate() {
+  if (baudRateSelector.value == 'custom') {
+    return Number.parseInt(customBaudRateInput.value);
+  }
+  return Number.parseInt(baudRateSelector.value);
+}
+
+/**
+ * Resets the UI back to the disconnected state.
+ */
+function markDisconnected() {
+  // term.writeln('<DISCONNECTED>');
+  console.log("DISCONNECTED");
+  portSelector.disabled = false;
+  connectButton.textContent = 'Connect';
+  baudRateSelector.disabled = false;
+  customBaudRateInput.disabled = false;
+  dataBitsSelector.disabled = false;
+  paritySelector.disabled = false;
+  stopBitsSelector.disabled = false;
+  flowControlCheckbox.disabled = false;
+  port = undefined;
+}
+
+/**
+ * Initiates a connection to the selected port.
+ */
+async function connectToPort() {
+  await getSelectedPort();
+  if (!port) {
+    return;
+  }
+
+  const options = {
+    baudRate: getSelectedBaudRate(),
+    dataBits: Number.parseInt(dataBitsSelector.value),
+    parity: paritySelector.value,
+    stopBits: Number.parseInt(stopBitsSelector.value),
+    flowControl:
+        flowControlCheckbox.checked ? 'hardware' : 'none',
+
+    // Prior to Chrome 86 these names were used.
+    baudrate: getSelectedBaudRate(),
+    databits: Number.parseInt(dataBitsSelector.value),
+    stopbits: Number.parseInt(stopBitsSelector.value),
+    rtscts: flowControlCheckbox.checked,
+  };
+  console.log(options);
+  await port.open(options);
+
+  portSelector.disabled = true;
+  connectButton.textContent = 'Disconnect';
+  baudRateSelector.disabled = true;
+  customBaudRateInput.disabled = true;
+  dataBitsSelector.disabled = true;
+  paritySelector.disabled = true;
+  stopBitsSelector.disabled = true;
+  flowControlCheckbox.disabled = true;
+  // term.writeln('<CONNECTED>');
+  console.log('<CONNECTED>');
+
+  let stringOutput = ""; 
+
+  function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+  }
+
+
+  while (port && port.readable) {
+    let tracker  = false; 
+
+    try {
+      reader = port.readable.getReader();
+      for (;;) {
+        const {value, done} = await reader.read();
+        if (value) {
+          tracker = true 
+          if (tracker) {
+            sleep(1500); 
+          }
+          const testing = new TextDecoder().decode(value);
+          // alphas = alphas.concat(testing.toString())
+          stringOutput += testing; 
+          // console.log(value);
+          // term.writeUtf8(value);
+          console.log(stringOutput);
+        }
+        // console.log(done);
+        if (done) {
+          console.log(stringOutput);
+          break;
+        }
+      }
+      reader.releaseLock();
+      reader = undefined;
+    } catch (e) {
+      console.error(e);
+      console.log(`<ERROR: ${e.message}>`);
+      // term.writeln(`<ERROR: ${e.message}>`);
+    }
+  }
+
+  if (port) {
+    try {
+      await port.close();
+    } catch (e) {
+      console.error(e);
+      // term.writeln(`<ERROR: ${e.message}>`);
+    }
+
+    markDisconnected();
+  }
+}
+
+/**
+ * Closes the currently active connection.
+ */
+async function disconnectFromPort() {
+  // Move |port| into a local variable so that connectToPort() doesn't try to
+  // close it on exit.
+  const localPort = port;
+  port = undefined;
+
+  if (reader) {
+    await reader.cancel();
+  }
+
+  if (localPort) {
+    try {
+      await localPort.close();
+    } catch (e) {
+      console.error(e);
+      // term.writeln(`<ERROR: ${e.message}>`);
+    }
+  }
+
+  markDisconnected();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // const terminalElement = document.getElementById('terminal');
+  // if (terminalElement) {
+    // term.open(terminalElement);
+    // fitAddon.fit();
+  // }
+
+  // const download = document.getElementById('download') ;
+  // download.addEventListener('click', downloadTerminalContents);
+  portSelector = document.getElementById('ports') ;
+
+  connectButton = document.getElementById('connect');
+  connectButton.addEventListener('click', () => {
+    if (port) {
+      disconnectFromPort();
+    } else {
+      connectToPort();
+    }
+  });
+
+  baudRateSelector = document.getElementById('baudrate') ;
+  baudRateSelector.addEventListener('input', () => {
+    if (baudRateSelector.value == 'custom') {
+      customBaudRateInput.hidden = false;
+    } else {
+      customBaudRateInput.hidden = true;
+    }
+  });
+
+  customBaudRateInput =
+      document.getElementById('custom_baudrate');
+  dataBitsSelector = document.getElementById('databits') ;
+  paritySelector = document.getElementById('parity') ;
+  stopBitsSelector = document.getElementById('stopbits') ;
+  flowControlCheckbox = document.getElementById('rtscts');
+  echoCheckbox = document.getElementById('echo');
+  flushOnEnterCheckbox =
+      document.getElementById('enter_flush');
+
+  const convertEolCheckbox =
+      document.getElementById('convert_eol');
+  const convertEolCheckboxHandler = () => {
+    // term.setOption('convertEol', convertEolCheckbox.checked);
+  };
+  convertEolCheckbox.addEventListener('change', convertEolCheckboxHandler);
+  convertEolCheckboxHandler();
+
+  const serial = usePolyfill ? polyfill : navigator.serial;
+  const ports = await serial.getPorts();
+  ports.forEach((port) => addNewPort(port));
+
+  // These events are not supported by the polyfill.
+  // https://github.com/google/web-serial-polyfill/issues/20
+  if (!usePolyfill) {
+    navigator.serial.addEventListener('connect', (event) => {
+      addNewPort((event).port || event.target);
+    });
+    navigator.serial.addEventListener('disconnect', (event) => {
+      const portOption = findPortOption(
+          (event).port || event.target);
+      if (portOption) {
+        portOption.remove();
+      }
+    });
+  }
+});
+
+  </script>
+</body>
+</html>

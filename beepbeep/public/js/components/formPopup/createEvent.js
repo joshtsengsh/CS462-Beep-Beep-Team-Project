@@ -129,21 +129,7 @@ if (createEventSuccess) {
   <button type="submit" id="download-barcodes" class="btn btn-primary ">Download Barcodes</button>`
   
   $('#download-barcodes').on('click', function() {
-    let barcode = [];
-    console.log(data.names);
-    console.log('testing');
-    for (let key in data.names) {
-      if (data.names.hasOwnProperty(key)) {
-        barcode.push(textToBase64Barcode(key))
-      }
-    }
-    // data.names.forEach((d) => (
-    //   barcode.push(textToBase64Barcode(d.ID))
-    // ))
-    //once all process, create barcode pdf and download
-    if (barcode.length != 0) {
-      createPDF(barcode)
-    } 
+    downloadBarcodes(data)
   })
   } else {
   //if fail 
