@@ -1,8 +1,11 @@
 /**
  * Purely code logic for db interaction only 
  */
-
 // get list of events 
+let localApi = "http://localhost:5001/beepbeep-45b71/us-central1/"; 
+let prodApi = "https://us-central1-beepbeep-45b71.cloudfunctions.net/"; 
+
+
 var events = [];
 db.collection("events")
   .onSnapshot((snapshot) => {
@@ -12,6 +15,16 @@ db.collection("events")
     })
     console.log(events)
 });
+
+
+const updateParticipants = (data) => {
+  let participantID = data.participantID; 
+  let attendanceRound = data.attendanceRound;
+  let eventID = data.evenID; 
+  let temp = data.temp; 
+
+
+}
 
 
 /**
