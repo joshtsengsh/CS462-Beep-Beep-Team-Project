@@ -2,11 +2,14 @@
 // render the view here 
 let table = `
 <div> 
+  <p id="hiddenEventID">
+  </p>
   <div id="single-event-component">
     <button type="button" class="btn btn-primary" id="back-to-events">Back</button>
     <table id="table"
     data-search="true"
     data-buttons="customButtons"
+    data-show-export="true"
     data-pagination="true"
     data-page-size="10"
     data-page-list="[10, 25, 50, 100]"
@@ -140,13 +143,14 @@ renderTable =(data) => {
     //render table according to data 
     var $table = $('#table');
     $(function() {
-  
-
-
-
       //for visuals only 
-      $table.bootstrapTable({data: transFormToTableVisual(data)})
+      $table.bootstrapTable({data: transFormToTableVisual(data), exportTypes: ['csv', 'excel']})
     })
+
+  // let eventUniqueID = events[id].eventId
+
+  //render custom buttons 
+  customButtons(); 
 }
 
 
@@ -199,30 +203,69 @@ closeEditPopup = () => {
 }
 
 
+function loadEventPageContent(id) {
+  console.log("Loading content for {" + events[id].eventId + "}");
+  // Update text "Content loading for {id}..."
+
+  //replace events-component with single-event-component 
+  document.getElementById('events-component').innerHTML = table;
+
+
+  document.title = events[id].eventData.eventName;
+
+  let data = events[id].eventData.attendees; 
+
+  //render table 
+  renderTable(data)
+
+  //create a hidden element so that we can extract the event ID to do query later 
+  let eventIDField = document.createElement("input");
+  eventIDField.setAttribute("type", "hidden");
+  eventIDField.setAttribute("id", "eventIDField");
+  eventIDField.setAttribute("value", events[id].eventId);
+  $('#hiddenEventID').append(eventIDField);
+
+  //if click on back button --> bring them to events page 
+  //force route as of now
+  $('#back-to-events').on('click', () => {
+    // window.location.href="events";
+    routeToEventsPage();
+  })
+} 
+
+
 /**
  * Render buttons for : 
- * Download CSV 
+ * Download CSV --> if wan custom alter csv 
  * Print Barcode
  * Start attendance taking 
  */
-customButtons = (data) => {
+ customButtons = (data) => {
   return {
-    downloadSheet: {
-      text: 'Download Sheet',
-      icon: 'fas fa-download',
-      event: function () {
-        console.log('downloadSheet');
-        //inject services function here from eventServices
-      },
-      attributes: {
-        title: 'Download data as xlsx / csv'
-      }
-    },
+    // downloadSheet: {
+    //   text: 'Download Sheet',
+    //   icon: 'fas fa-download',
+    //   event: function () {
+    //     console.log('downloadSheet');
+    //     //inject services function here from eventServices
+    //   },
+    //   attributes: {
+    //     title: 'Download data as xlsx / csv'
+    //   }
+    // },
     printBarcode : {
       text: 'Print Barcode',
       icon: 'fas fa-barcode',
       event: function () {
         console.log('Print barcode of participants');
+        //get from hidden field 
+        let id = document.getElementById('eventIDField').value
+        console.log(id);
+        getEventById(id).then(response => {
+          // console.log(response.eventData.attendees);
+          downloadBarcodes(response.eventData.attendees)
+        });
+        
       },
       attributes: {
         title: 'Print barcodes'
@@ -244,33 +287,8 @@ customButtons = (data) => {
 }
 
 
-function loadEventPageContent(id) {
-  console.log("Loading content for {" + id + "}");
-  // Update text "Content loading for {id}..."
-
-  //replace events-component with single-event-component 
-  document.getElementById('events-component').innerHTML = table;
-
-
-  document.title = events[id].eventData.eventName;
-
-  let data = events[id].eventData.attendees; 
-
-  //render table 
-  renderTable(data)
-
-  //render custom buttons 
-  customButtons(); 
-
-  //if click on back button --> bring them to events page 
-  //force route as of now
-  $('#back-to-events').on('click', () => {
-    // window.location.href="events";
-    routeToEventsPage();
-  })
-} 
-
 function submitRecord() {
+  let eventId = document.getElementById('eventIDField').value
   console.log("submitting temperature and attendance");
   const attendanceData = document.getElementById( "attendance").value;
   const temperatureData = document.getElementById( "temperature").value;
@@ -287,9 +305,8 @@ function submitRecord() {
   let data = {
     "participantId": attendanceData,
     "temp": temperatureData,
-    "eventId": "1RqAByun8GAof9MCc7Mu",
+    "eventId": eventId,
     "attendanceRound": attendanceRound
-
   }
   console.log(data)
 

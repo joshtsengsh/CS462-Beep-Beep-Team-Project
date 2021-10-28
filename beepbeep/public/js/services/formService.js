@@ -122,8 +122,8 @@ readCsv = () => {
 
 const downloadBarcodes = (data) => {
   let barcode = [];
-  for (let key in data.names) {
-    if (data.names.hasOwnProperty(key)) {
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
       barcode.push(textToBase64Barcode(key))
     }
   }

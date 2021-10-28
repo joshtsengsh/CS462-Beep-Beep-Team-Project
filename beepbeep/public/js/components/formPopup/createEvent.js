@@ -129,7 +129,7 @@ if (createEventSuccess) {
   <button type="submit" id="download-barcodes" class="btn btn-primary ">Download Barcodes</button>`
   
   $('#download-barcodes').on('click', function() {
-    downloadBarcodes(data)
+    downloadBarcodes(data.names)
   })
   } else {
   //if fail 

@@ -25,10 +25,34 @@ const firestore = admin.firestore();
 // app.use(cors());
 
 // build multiple CRUD interfaces:
-app.get('/:id', (req, res) => res.send(Widgets.getById(req.params.id)));
+app.get('/:id', (req, res) => res.send(Widgets.getById()));
 app.post('/', (req, res) => res.send(Widgets.create()));
 app.get('/',(req, res) => res.send(Widgets.getAllEvents()));
 app.patch('/', (req, res) => res.send(Widgets.recordParticipant()));
+
+// e.g http://localhost:5001/beepbeep-45b71/asia-southeast1/getById?id=2sR86wEWtkHmhd4D0ujO
+exports.getById = functions.region('asia-southeast1').https.onRequest( (req, res) => {
+    cors()(req, res, () => {
+
+        let queriedEventID = req.query.id; 
+
+        firestore.collection("events").where('__name__', '==' ,queriedEventID).get().then((querySnapshot) => {
+
+            let output = {}; 
+            querySnapshot.forEach((doc) => {
+                
+                row = {
+                    eventId: doc.id,
+                    eventData: doc.data(),
+                }
+                output = row; 
+            });
+
+            return res.json(output);
+        }); 
+        
+    }); 
+}); 
 
 // Adds new event
 exports.addEvent = functions.region('asia-southeast1').https.onRequest( (req, res) => {

@@ -12,6 +12,7 @@ let prodApi = "https://asia-southeast1-beepbeep-45b71.cloudfunctions.net/";
 let getAllEvents = "getAllEvents"; 
 let addEvent = "addEvent";
 let recordParticipant = "recordParticipant";
+let getById = "getById"
 
 var events = [] 
 fetch(prodApi + getAllEvents, {
@@ -30,6 +31,23 @@ fetch(prodApi + getAllEvents, {
   })
   .catch(e => console.log(e));
 
+
+const getEventById = (id) => {
+  return fetch(prodApi + getById + '?id=' + id , {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  .then(res=>res.json())
+    .then(res => {
+
+      return res; 
+  
+    })
+    .catch(e => console.log(e));
+}
 // fetch(test)
 //   .then(response => response.json())
 //   .then(data => console.log(data));
