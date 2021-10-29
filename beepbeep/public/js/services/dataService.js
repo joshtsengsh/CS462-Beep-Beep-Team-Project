@@ -65,7 +65,7 @@ const getEventById = (id) => {
 //     console.log(events)
 // });
 
-const editParticipantsData = (data) => {
+const editParticipant = (data) => {
   console.log(data);
 }
 

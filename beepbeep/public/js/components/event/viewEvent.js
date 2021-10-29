@@ -35,6 +35,7 @@ let table = `
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <input type="hidden" id="participantID" name="participantID" value="">
         <h5 class="modal-title" id="editModalLabel">New message</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-edit" onclick="closeEditPopup()">
           <span aria-hidden="true">&times;</span>
@@ -99,34 +100,46 @@ let table = `
 </div>
 
 <div class="modal fade" id="recordingModal" tabindex="-1" aria-labelledby="recordingModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="recordingModalLabel">Scan</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value = 1 checked="checked">
-              <label class="custom-control-label" for="customRadio1">Attendance 1</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" value = 2>
-              <label class="custom-control-label" for="customRadio2">Attendance 2</label>
-            </div>
-            <br>
-            <div class="mb-3">
-                <label for="attendanceInput" class="form-label">Name</label>
-                <input type="text" class="form-control" id="attendance" placeholder="Please Scan Barcode">
-            </div>
-            <div class="mb-3">
-                <label for="temperatureInput" class="form-label">Temperature</label>
-                <input type="text" class="form-control" id="temperature" placeholder="Please Scan Temperature">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" onclick="submitRecord()" class="btn btn-primary" id="save-record" >Save changes</button>
-        </div>
+
+  <label hidden for="ports">Port:</label>
+  <select hidden id="ports" >
+    <option value="prompt">Add a port...</option>
+  </select>
+  <label hidden for="baudrate">Baud rate:</label>
+  <select hidden id="baudrate">
+    <option value="9600">9600</option>
+  </select>
+  <input hidden id="custom_baudrate" type="number" min="1" placeholder="Enter baudrate..." hidden>
+  <label hidden for="databits">Data bits:</label>
+  <select hidden id="databits">
+    <option value="7">7</option>
+    <option value="8" selected>8</option>
+  </select>
+  <label hidden for="parity">Parity:</label>
+  <select hidden id="parity">
+    <option value="none" selected>None</option>
+    <option value="even">Even</option>
+    <option value="odd">Odd</option>
+  </select>
+  <label hidden for="stopbits">Stop bits:</label>
+  <select hidden id="stopbits">
+    <option value="1" selected>1</option>
+    <option value="2">2</option>
+  </select>
+  <input hidden id="rtscts" type="checkbox">
+  <label hidden for="rtscts">Hardware flow control</label>
+  <input hidden id="echo" type="checkbox">
+  <label hidden for="echo">Local echo</label>
+  <input hidden id="enter_flush" type="checkbox">
+  <label hidden for="enter_flush">Flush on enter</label>
+  <input hidden id="convert_eol" type="checkbox">
+  <button hidden id="download">Download output</button>
+  <label hidden for="convert_eol">Convert EOL</label>
+
+
+<div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content" id="recordingFormModal">
+
     </div>
 </div>
 </div>
@@ -275,9 +288,7 @@ function loadEventPageContent(id) {
       text: 'Start',
       icon: 'fas fa-play',
       event: function () {
-        console.log('start recording');
         recordingPopup();
-        //inject services function here from eventServices
       },
       attributes: {
         title: 'Start recording attendance and temperature'
@@ -317,4 +328,6 @@ function submitRecord() {
   //if click on back button --> bring them to events page 
   //force route as of now
 }
+
+
 

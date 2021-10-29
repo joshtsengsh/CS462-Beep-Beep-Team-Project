@@ -2,6 +2,8 @@
 const editFormPopup = (participantData) => {
 
   $('#editModal').modal('show');
+  
+  document.getElementById('participantID').value = participantData.id
 
   document.getElementById('editModalLabel').innerText = "Editing details of " + participantData.attendeeName;
 
@@ -26,6 +28,10 @@ $('#close-edit').on('click', function() {
 function editParticipantData() {
   console.log("send data");
 
+  let participantID = document.getElementById('participantID').value; 
+
+  let eventId = document.getElementById('eventIDField').value
+
   let name = document.getElementById('edit-participant-name').value; 
 
   let attOne = document.getElementById('attOne').value;
@@ -35,14 +41,15 @@ function editParticipantData() {
   let tempTwo = document.getElementById('tempTwo').value; 
 
   let data = {
+    eventId: eventId,
+    participantID: participantID, 
     name: name, 
     attOne: attOne, 
     tempOne: tempOne, 
     attTwo: attTwo, 
     tempTwo: tempTwo
   }
-  editParticipantsData(data);
-  console.log(data);
+  editParticipant(data);
   $('#editModal').modal('hide');
 }
 
