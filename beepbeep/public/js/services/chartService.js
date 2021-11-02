@@ -1,5 +1,5 @@
 
-  //set up
+  // Setup - The visuals and dataset
   const pieData = {
     labels: [
       'Red',
@@ -17,14 +17,14 @@
       hoverOffset: 4
     }]
   };
-//config
+
+// Config
 const pieChartconfig = {
     type: 'pie',
     data: pieData,
   };
   
-  // === include 'setup' then 'config' above ===
-
+  // Display the chart
   const pieChart = new Chart(
     document.getElementById('pieChart'),
     pieChartconfig
@@ -32,40 +32,3 @@ const pieChartconfig = {
 
  
 
-  const scatterData = {
-    datasets: [{
-      label: 'Scatter Dataset',
-      data: [{
-        x: -10,
-        y: 0
-      }, {
-        x: 0,
-        y: 10
-      }, {
-        x: 10,
-        y: 5
-      }, {
-        x: 0.5,
-        y: 5.5
-      }],
-      backgroundColor: 'rgb(255, 99, 132)'
-    }],
-  };
-
-  const scatterChartconfig = {
-    type: 'scatter',
-    data: scatterData,
-    options: {
-      scales: {
-        x: {
-          type: 'linear',
-          position: 'bottom'
-        }
-      }
-    }
-  };
-
-  const scatterChart = new Chart(
-    document.getElementById('scatterChart'),
-    scatterChartconfig
-  );
