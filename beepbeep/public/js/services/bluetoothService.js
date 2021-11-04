@@ -148,6 +148,16 @@
     port = undefined;
   }
   
+/**
+ * 
+ * @param {*} str -- str to be search 
+ * @param {*} word --> word that you want to search (absolute)
+ * @returns boolean 
+ */
+function containsWord(str, word) {
+    return str.match(new RegExp("\\b" + word + "\\b")) != null;
+}
+
   /**
    * Initiates a connection to the selected port.
    */
@@ -186,8 +196,16 @@
     console.log('<CONNECTED>');
     renderRecordingModalForm();
   
-    let stringOutput = ""; 
-  
+    // for id verification
+ 
+    let eventDataLookup =JSON.parse(localStorage.getItem('eventData'));
+
+    let getAllKeys = Object.keys(eventDataLookup); 
+
+    // console.log(eventDataLookup);
+
+    // console.log(getAllKeys);
+
     function sleep(milliseconds) {
     const date = Date.now();
     let currentDate = null;
@@ -195,11 +213,9 @@
       currentDate = Date.now();
     } while (currentDate - date < milliseconds);
     }
-  
-  
+
     while (port && port.readable) {
       let tracker  = false; 
-  
       try {
         reader = port.readable.getReader();
         for (;;) {
@@ -210,11 +226,57 @@
               sleep(1500); 
             }
             const testing = new TextDecoder().decode(value);
+            let stringOutput = ""; 
             // alphas = alphas.concat(testing.toString())
             stringOutput += testing; 
             // console.log(value);
             // term.writeUtf8(value);
-            console.log(stringOutput);
+
+            if (containsWord(stringOutput, "done")) {
+
+              // console.log(stringOutput);
+              // extract out temp and attendance w
+
+              let lines = stringOutput.split('\n');
+
+              // console.log(lines);
+
+              // let nameID = lines[0];
+              let nameID = lines[0].trim(); 
+
+              // let temp = lines[4].split('=')[1]
+
+              let o = lines.filter((m) => containsWord(m, "Object") ? m : "")
+
+              let temp = o[0].split("=")[1].trim()
+
+              // check if nameID inside, if inside --> then can send 
+              var resultObj = {};
+
+              getAllKeys.forEach(function(keyName) {
+                // using index of to check if the object key name have a matched string
+                if (keyName.indexOf(nameID) !== -1) {
+                  resultObj[keyName] = eventDataLookup[keyName];
+                }
+              })
+
+              let len = Object.keys(resultObj).length;
+
+              if (len >= 1) {
+
+                let actualKey = Object.keys(resultObj)[0]; // get the actual key name to be inserted to db 
+
+                console.log(actualKey);
+                console.log(temp)
+
+              } else {
+                console.log("participant not found");
+              }
+            
+              // if not inside --> participant not found ! 
+
+            }
+            // if see done, send 
           }
           // console.log(done);
           if (done) {
@@ -227,6 +289,7 @@
       } catch (e) {
         console.error(e);
         console.log(`<ERROR: ${e.message}>`);
+        break;
         // term.writeln(`<ERROR: ${e.message}>`);
       }
     }
@@ -284,7 +347,7 @@
     console.log(connectButton);
     
     connectButton.addEventListener('click', () => {
-      console.log(port);
+      // console.log(port);
       if (port) {
         disconnectFromPort();
         // don show form modal 

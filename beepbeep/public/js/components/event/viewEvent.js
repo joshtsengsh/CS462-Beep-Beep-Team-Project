@@ -157,6 +157,10 @@ renderTable =(data) => {
     var $table = $('#table');
     $(function() {
       //for visuals only 
+
+      // local storage for eventData 
+      localStorage.setItem('eventData', JSON.stringify(data));
+      
       $table.bootstrapTable({data: transFormToTableVisual(data), exportTypes: ['csv', 'excel']})
     })
 
