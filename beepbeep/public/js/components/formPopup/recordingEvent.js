@@ -32,6 +32,13 @@ openRecordingPopup = () => {
   // once connected --> replace the button and show the form 
 }
 
+function inputTemp(){
+  document.getElementById("tempValue").value = 36.9
+}
+function inputBarcode(){
+  document.getElementById("barcodeValue").value = 'Mark'
+}
+
 
 const renderRecordingModalForm = () => {
   let input = `
@@ -59,11 +66,13 @@ const renderRecordingModalForm = () => {
   </div>
 </div>
 <div class="modal-footer">
+
   <button type="button" onclick="submitRecord()" class="btn btn-primary" id="save-record" >Save changes</button>
 </div>  
   `
   document.getElementById('recordingFormModal').innerHTML = input; 
 }
+
 
 
 

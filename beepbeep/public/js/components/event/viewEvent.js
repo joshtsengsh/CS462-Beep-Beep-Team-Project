@@ -300,9 +300,14 @@ function loadEventPageContent(id) {
     },
   }
 }
-
+function inputValues(id, temp){
+  document.getElementById("temperature").value = temp
+  document.getElementById("attendance").value = id
+  submitRecord()
+}
 
 function submitRecord() {
+  // Values parse over to input textbox from bluetooth 
   let eventId = document.getElementById('eventIDField').value
   console.log("submitting temperature and attendance");
   const attendanceData = document.getElementById( "attendance").value;
@@ -319,7 +324,7 @@ function submitRecord() {
   // reminder to change to integer values for relevant data
   let data = {
     "participantId": attendanceData,
-    "temp": temperatureData,
+    "temp": parseFloat(temperatureData),
     "eventId": eventId,
     "attendanceRound": attendanceRound
   }
@@ -328,10 +333,17 @@ function submitRecord() {
   //replace events-component with single-event-component 
   // document.getElementById('save-record').innerHTML = table;
   // document.getElementById('save-record');
-
+  recordingParticipants(data)
   //if click on back button --> bring them to events page 
   //force route as of now
 }
+// function inputTemp(){
+//   console.log("SKKKKRAAA")
+//   document.getElementById("temperature").value = 36.9
+// }
+// function inputBarcode(){
+//   document.getElementById("attendance").value = 'Mark'
+// }
 
 
 
