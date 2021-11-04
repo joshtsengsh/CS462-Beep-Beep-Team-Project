@@ -192,11 +192,15 @@ transFormToTableVisual = (data) => {
   dataArray.map((m => {
     if (m.round1Attendance == false ){
       m.round1Attendance = "No"
-    } 
+    } else {
+      m.round1Attendance = "Yes"
+    }
 
     if (m.round2Attendance == false ){
       m.round2Attendance = "No"
-    } 
+    } else {
+      m.round2Attendance = "Yes"
+    }
 
     if (m.round1Temperature == 0 ){
       m.round1Temperature = "NA"
@@ -328,7 +332,7 @@ function submitRecord() {
     "eventId": eventId,
     "attendanceRound": attendanceRound
   }
-  console.log(data)
+  // console.log(data)
 
   //replace events-component with single-event-component 
   // document.getElementById('save-record').innerHTML = table;

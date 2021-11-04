@@ -239,7 +239,7 @@ function containsWord(str, word) {
 
               let lines = stringOutput.split('\n');
 
-              // console.log(lines);
+              console.log(lines);
 
               // let nameID = lines[0];
               let nameID = lines[0].trim(); 
@@ -249,6 +249,7 @@ function containsWord(str, word) {
               let o = lines.filter((m) => containsWord(m, "Object") ? m : "")
 
               let temp = o[0].split("=")[1].trim()
+
 
               // check if nameID inside, if inside --> then can send 
               var resultObj = {};
@@ -268,6 +269,8 @@ function containsWord(str, word) {
 
                 console.log(actualKey);
                 console.log(temp)
+
+                inputValues(actualKey, temp); 
 
               } else {
                 console.log("participant not found");

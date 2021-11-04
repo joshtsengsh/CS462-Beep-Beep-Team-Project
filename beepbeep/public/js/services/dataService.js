@@ -72,27 +72,25 @@ const editParticipant = (data) => {
 
 const recordingParticipants = (data) => {
   let output = {
-    participantID : data.participantID, 
+    participantId : data.participantId, 
     attendanceRound : data.attendanceRound, 
-    eventID : data.evenID, 
+    eventId : data.eventId, 
     temp : data.temp
   }
-
-  (async () => {
-    const rawResponse = await fetch(prodApi + recordParticipant, {
+  fetch(prodApi + recordParticipant, {
       method: 'PATCH',
-      // mode: 'no-cors',
+      body: JSON.stringify(output),
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(output)
-    });
-    const content = await rawResponse.json();
-
-    console.log(content);
-  })();
-
+      "Content-type": "application/json; charset=UTF-8"
+      }
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        successSubmission(json)
+        // change modal 
+      })
+      .catch(e => console.log(e))
 }
 
 

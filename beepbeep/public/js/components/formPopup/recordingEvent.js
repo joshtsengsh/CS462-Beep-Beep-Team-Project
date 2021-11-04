@@ -78,3 +78,16 @@ const renderRecordingModalForm = () => {
 
 
 
+successSubmission = (sucessMsg) => {
+  let message = `
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title w-100 text-center">${sucessMsg}</h5>
+    </div>
+  </div> 
+  `
+  document.getElementById('recordingFormModal').innerHTML = message; 
+
+  setTimeout(function(){renderRecordingModalForm()}, 2000);
+
+}
