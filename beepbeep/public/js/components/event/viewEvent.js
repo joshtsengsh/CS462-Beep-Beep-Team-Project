@@ -225,19 +225,31 @@ closeEditPopup = () => {
 
 
 function loadEventPageContent(id) {
-  console.log("Loading content for {" + events[id].eventId + "}");
+  // console.log("Loading content for {" + events[id].eventId + "}");
   // Update text "Content loading for {id}..."
 
   //replace events-component with single-event-component 
   document.getElementById('events-component').innerHTML = table;
 
 
-  document.title = events[id].eventData.eventName;
+  // let data = events[id].eventData.attendees; 
+getEventById(id).then((r) =>{ 
 
-  let data = events[id].eventData.attendees; 
+    console.log("Loading content for {" + r.eventId + "}");
+  renderTable(r.eventData.attendees)
 
-  //render table 
-  renderTable(data)
+    //create a hidden element so that we can extract the event ID to do query later 
+    let eventIDField = document.createElement("input");
+    eventIDField.setAttribute("type", "hidden");
+    eventIDField.setAttribute("id", "eventIDField");
+    eventIDField.setAttribute("value", r.eventId);
+    $('#hiddenEventID').append(eventIDField);
+  
+
+  document.title = r.eventData.eventName;
+})
+  
+  // renderTable(data)
 
   //create a hidden element so that we can extract the event ID to do query later 
   let eventIDField = document.createElement("input");
@@ -340,6 +352,13 @@ function submitRecord() {
   recordingParticipants(data)
   //if click on back button --> bring them to events page 
   //force route as of now
+}
+function closeAttendance(){
+  console.log("yeet")
+
+  let eventId = document.getElementById('eventIDField').value
+  loadEventPageContent(eventId)
+
 }
 // function inputTemp(){
 //   console.log("SKKKKRAAA")

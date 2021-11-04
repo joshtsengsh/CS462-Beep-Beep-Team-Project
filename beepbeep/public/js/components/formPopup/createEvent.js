@@ -168,8 +168,8 @@ $('#close-event').on('click', function() {
 //if user click outside of modal 
 $('#createEventModal').on('hidden.bs.modal', function (e) {
   $('#createEventModal').modal('hide')
-  window.location.reload();
-  console.log('test')
+  // window.location.reload();
+  console.log('Yeet')
   routeToEventsPage();
 })
 
