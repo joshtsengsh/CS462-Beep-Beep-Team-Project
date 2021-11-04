@@ -99,45 +99,43 @@ let table = `
   </div>
 </div>
 
+<label hidden for="ports">Port:</label>
+<select hidden id="ports" >
+  <option value="prompt">Add a port...</option>
+</select>
+<label hidden for="baudrate">Baud rate:</label>
+<select hidden id="baudrate">
+  <option value="9600">9600</option>
+</select>
+<input hidden id="custom_baudrate" type="number" min="1" placeholder="Enter baudrate..." hidden>
+<label hidden for="databits">Data bits:</label>
+<select hidden id="databits">
+  <option value="7">7</option>
+  <option value="8" selected>8</option>
+</select>
+<label hidden for="parity">Parity:</label>
+<select hidden id="parity">
+  <option value="none" selected>None</option>
+  <option value="even">Even</option>
+  <option value="odd">Odd</option>
+</select>
+<label hidden for="stopbits">Stop bits:</label>
+<select hidden id="stopbits">
+  <option value="1" selected>1</option>
+  <option value="2">2</option>
+</select>
+<input hidden id="rtscts" type="checkbox">
+<label hidden for="rtscts">Hardware flow control</label>
+<input hidden id="echo" type="checkbox">
+<label hidden for="echo">Local echo</label>
+<input hidden id="enter_flush" type="checkbox">
+<label hidden for="enter_flush">Flush on enter</label>
+<input hidden id="convert_eol" type="checkbox">
+<button hidden id="download">Download output</button>
+<label hidden for="convert_eol">Convert EOL</label>
+
 <div class="modal fade" id="recordingModal" tabindex="-1" aria-labelledby="recordingModalLabel" aria-hidden="true">
-
-  <label hidden for="ports">Port:</label>
-  <select hidden id="ports" >
-    <option value="prompt">Add a port...</option>
-  </select>
-  <label hidden for="baudrate">Baud rate:</label>
-  <select hidden id="baudrate">
-    <option value="9600">9600</option>
-  </select>
-  <input hidden id="custom_baudrate" type="number" min="1" placeholder="Enter baudrate..." hidden>
-  <label hidden for="databits">Data bits:</label>
-  <select hidden id="databits">
-    <option value="7">7</option>
-    <option value="8" selected>8</option>
-  </select>
-  <label hidden for="parity">Parity:</label>
-  <select hidden id="parity">
-    <option value="none" selected>None</option>
-    <option value="even">Even</option>
-    <option value="odd">Odd</option>
-  </select>
-  <label hidden for="stopbits">Stop bits:</label>
-  <select hidden id="stopbits">
-    <option value="1" selected>1</option>
-    <option value="2">2</option>
-  </select>
-  <input hidden id="rtscts" type="checkbox">
-  <label hidden for="rtscts">Hardware flow control</label>
-  <input hidden id="echo" type="checkbox">
-  <label hidden for="echo">Local echo</label>
-  <input hidden id="enter_flush" type="checkbox">
-  <label hidden for="enter_flush">Flush on enter</label>
-  <input hidden id="convert_eol" type="checkbox">
-  <button hidden id="download">Download output</button>
-  <label hidden for="convert_eol">Convert EOL</label>
-
-
-<div class="modal-dialog modal-dialog-centered" >
+<div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content" id="recordingFormModal">
 
     </div>
@@ -252,11 +250,11 @@ getEventById(id).then((r) =>{
   // renderTable(data)
 
   //create a hidden element so that we can extract the event ID to do query later 
-  let eventIDField = document.createElement("input");
-  eventIDField.setAttribute("type", "hidden");
-  eventIDField.setAttribute("id", "eventIDField");
-  eventIDField.setAttribute("value", events[id].eventId);
-  $('#hiddenEventID').append(eventIDField);
+  // let eventIDField = document.createElement("input");
+  // eventIDField.setAttribute("type", "hidden");
+  // eventIDField.setAttribute("id", "eventIDField");
+  // eventIDField.setAttribute("value", events[id].eventId);
+  // $('#hiddenEventID').append(eventIDField);
 
   //if click on back button --> bring them to events page 
   //force route as of now
@@ -360,6 +358,32 @@ function closeAttendance(){
   loadEventPageContent(eventId)
 
 }
+
+$('#recordingModal').on('hidden.bs.modal', function (e) {
+  // $('#recordingModal').modal('hide')
+  // window.location.reload();
+  console.log('Yeet')
+  // routeToEventsPage();
+  // closeAttendance()
+})
+
+
+// recordingFormModal
+
+$('#recordingFormModal').on('hidden.bs.modal', function (e) {
+  // $('#recordingModal').modal('hide')
+  // window.location.reload();
+  console.log('Yeet')
+  // routeToEventsPage();
+  // closeAttendance()
+})
+
+$('#recordingFormModal').on('shown.bs.modal', function (e) {
+  console.log('myModal is shown');
+  // Your actual function here
+})
+
+
 // function inputTemp(){
 //   console.log("SKKKKRAAA")
 //   document.getElementById("temperature").value = 36.9

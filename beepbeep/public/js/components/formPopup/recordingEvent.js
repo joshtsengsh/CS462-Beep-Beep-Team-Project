@@ -1,7 +1,7 @@
 /**
  * Listen startRecording class
  */
- recordingPopup = () => {
+const recordingPopup = () => {
   console.log("Recording");
   renderConnectionModal();
   openRecordingPopup(); 
@@ -44,7 +44,6 @@ const renderRecordingModalForm = () => {
   let input = `
     <div class="modal-header">
       <h5 class="modal-title" id="recordingModalLabel">Scan</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeRecordingModal"></button>
     </div>
     <div class="modal-body">
       <div class="custom-control custom-radio">
@@ -81,6 +80,8 @@ const renderRecordingModalForm = () => {
   //   console.log("close function")
     
   // })
+}
+
 
 successSubmission = (sucessMsg) => {
   let message = `
@@ -93,5 +94,4 @@ successSubmission = (sucessMsg) => {
   document.getElementById('recordingFormModal').innerHTML = message; 
 
   setTimeout(function(){renderRecordingModalForm()}, 2000);
-
 }

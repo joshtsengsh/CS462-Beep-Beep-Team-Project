@@ -5,7 +5,6 @@
 
 const createEventLoaded = () => {
   $('#addEvent').on('click', function() {
-  
     
     $('#createEventModal').modal('show')
   })
