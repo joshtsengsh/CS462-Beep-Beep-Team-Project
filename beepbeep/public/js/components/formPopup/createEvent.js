@@ -143,6 +143,8 @@ if (createEventSuccess) {
 $('#close-event').on('click', function() {
   $('#createEventModal').modal('hide')
   // window.location.reload();
+  console.log('Yeet')
+
   routeToEventsPage();
 })
 
@@ -150,6 +152,7 @@ $('#close-event').on('click', function() {
 $('#createEventModal').on('hidden.bs.modal', function (e) {
   $('#createEventModal').modal('hide')
   // window.location.reload();
+  console.log('Yeet')
   routeToEventsPage();
 })
 }

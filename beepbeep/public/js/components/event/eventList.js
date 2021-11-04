@@ -120,13 +120,14 @@ const loadEventsPageContent = () => {
 
 const renderEventCards = () => {
   events.forEach( (event, i) => {
+    console.log(event)
     let dateObj = new Date (event.eventData.startDateTime); 
 
     let date = dateObj.toLocaleDateString();
   
     let startTime = dateObj.toLocaleString('en-SG', { hour: 'numeric', minute: 'numeric', hour12: true })
 
-      const card = `<div class="col mb-6" style="padding-top: 10px;" id="${i}">
+      const card = `<div class="col mb-6" style="padding-top: 10px;" id="${event.eventId}">
       <div class="card h-100 text-center">
         <div class="card-header ">
         <div class="row">
@@ -164,7 +165,7 @@ const renderEventCards = () => {
                 // console.log(index);
                 //get id of the children if have 
                 if (cards.children[index].id) {
-                  // console.log(cards.children[index].id);
+                  console.log(cards.children[index].id);
                   routeToEventPage(cards.children[index].id);
                 } 
           }    
