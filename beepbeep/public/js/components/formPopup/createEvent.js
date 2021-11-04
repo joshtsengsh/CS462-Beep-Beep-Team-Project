@@ -6,7 +6,6 @@
 const createEventLoaded = () => {
   $('#addEvent').on('click', function() {
   
-    console.log('testing');
     
     $('#createEventModal').modal('show')
   })
@@ -15,7 +14,10 @@ const createEventLoaded = () => {
 
 //manual close 'add event popup'
 $('#close-event').on('click', function() {
+
+  console.log('test')
   $('#createEventModal').modal('hide')
+  routeToEventsPage();
 })
 
 //show file name on file label upon upload
@@ -87,6 +89,21 @@ $('#event-form').submit((e) => {
   processDataToDB(file, formData);
 });
 
+$('#close-event').on('click', function() {
+  $('#createEventModal').modal('hide')
+  // window.location.reload();
+  routeToEventsPage();
+})
+
+// $('.modal').on('hide.bs.modal', function(e)
+// {
+//   console.log("tt");
+// });
+
+// $('#createEventModal').on('hidden.bs.modal', function(e)
+// {
+//   console.log("upon close");
+// });
 
 /**
  * Void method 
@@ -143,15 +160,19 @@ if (createEventSuccess) {
 $('#close-event').on('click', function() {
   $('#createEventModal').modal('hide')
   // window.location.reload();
+  console.log('Yeet')
+
   routeToEventsPage();
 })
 
 //if user click outside of modal 
 $('#createEventModal').on('hidden.bs.modal', function (e) {
   $('#createEventModal').modal('hide')
-  // window.location.reload();
+  window.location.reload();
+  console.log('test')
   routeToEventsPage();
 })
+
 }
 
 
