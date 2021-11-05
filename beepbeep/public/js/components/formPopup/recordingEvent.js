@@ -83,6 +83,7 @@ const renderRecordingModalForm = () => {
 }
 
 
+// success of fail submission of bluetooth data to backend 
 successSubmission = (sucessMsg) => {
   let message = `
   <div class="modal-content">

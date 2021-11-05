@@ -7,7 +7,7 @@ const createEventLoaded = () => {
   $('#addEvent').on('click', function() {
     
     $('#createEventModal').modal('show')
-  })
+})
 
 
 
@@ -16,7 +16,8 @@ $('#close-event').on('click', function() {
 
   console.log('test')
   $('#createEventModal').modal('hide')
-  routeToEventsPage();
+  // setTimeout(function(){routeToEventsPage()}, 2000);
+  // routeToEventsPage();
 })
 
 //show file name on file label upon upload
@@ -91,7 +92,8 @@ $('#event-form').submit((e) => {
 $('#close-event').on('click', function() {
   $('#createEventModal').modal('hide')
   // window.location.reload();
-  routeToEventsPage();
+  routeToEventsPage()
+  // setTimeout(function(){routeToEventsPage()}, 2000);
 })
 
 // $('.modal').on('hide.bs.modal', function(e)
@@ -161,7 +163,8 @@ $('#close-event').on('click', function() {
   // window.location.reload();
   console.log('Yeet')
 
-  routeToEventsPage();
+  routeToEventsPage()
+  // setTimeout(function(){routeToEventsPage()}, 2000);
 })
 
 //if user click outside of modal 
@@ -169,7 +172,10 @@ $('#createEventModal').on('hidden.bs.modal', function (e) {
   $('#createEventModal').modal('hide')
   // window.location.reload();
   console.log('Yeet')
-  routeToEventsPage();
+
+  
+  routeToEventsPage()
+  // setTimeout(function(){routeToEventsPage()}, 2000);
 })
 
 }

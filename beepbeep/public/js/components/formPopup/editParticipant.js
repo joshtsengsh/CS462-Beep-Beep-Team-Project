@@ -42,17 +42,31 @@ function editParticipantData() {
 
   let data = {
     eventId: eventId,
-    participantID: participantID, 
+    participantId: participantID, 
     name: name, 
     attOne: attOne, 
     tempOne: tempOne, 
     attTwo: attTwo, 
     tempTwo: tempTwo
   }
+
   editParticipant(data);
-  $('#editModal').modal('hide');
 }
 
-closeEditParticipantModal = () => {
 
+closeEditParticipantModal = (sucessMsg) => {
+    // edit modal label change to be inserted 
+
+  let message = `
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title w-100 text-center">${sucessMsg}</h5>
+    </div>
+  </div> 
+  `
+  document.getElementById('editModalDialog').innerHTML = message; 
+
+  setTimeout(function(){$('#editModal').modal('hide');}, 2000);
+
+  setTimeout(function(){closeAttendance()}, 2000);
 }

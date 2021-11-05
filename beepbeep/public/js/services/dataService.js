@@ -14,23 +14,43 @@ let getAllEvents = "getAllEvents";
 let addEvent = "addEvent";
 let recordParticipant = "recordParticipant";
 let getById = "getById"
+let editParticipantByParticipantId = "editParticipantByParticipantId";
 
-var events = [] 
-fetch(prodApi + getAllEvents, {
-  method: 'GET',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-})
-.then(res=>res.json())
-  .then(res => {
-    // console.log(res);
+// var events = [] 
+// fetch(prodApi + getAllEvents, {
+//   method: 'GET',
+//   headers: {
+//     'Accept': 'application/json',
+//     'Content-Type': 'application/json'
+//   },
+// })
+// .then(res=>res.json())
+//   .then(res => {
+//     // console.log(res);
 
-    events = res;
+//     events = res;
     
+//   })
+//   .catch(e => console.log(e));
+
+const renderEvents = () => { 
+  
+  return fetch(prodApi + getAllEvents, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
   })
-  .catch(e => console.log(e));
+  .then(res=>res.json())
+    .then(res => {
+      // console.log(res);
+  
+      return res; 
+      
+    })
+    .catch(e => console.log(e));
+}
 
 
 const getEventById = (id) => {
@@ -67,7 +87,26 @@ const getEventById = (id) => {
 // });
 
 const editParticipant = (data) => {
-  console.log(data);
+
+  fetch(prodApi + editParticipantByParticipantId, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+    headers: {
+    "Content-type": "application/json; charset=UTF-8"
+    }
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+
+      // successSubmission(json)
+      // closeAttendance()
+      // change modal 
+      closeEditParticipantModal(json);
+      
+    })
+    .catch(e => console.log(e))
+
 }
 
 const recordingParticipants = (data) => {
@@ -108,7 +147,7 @@ const createEvent = (data) => {
     }
     console.log(output);
     
-    console.log(JSON.stringify(output));
+    // console.log(JSON.stringify(output));
 
 
     (async () => {

@@ -7,8 +7,11 @@ const routeToEventPage = (id) => {
 const routeToEventsPage = () => {
   let pageName = 'events'
 
+  // setTimeout(function(){loadEventsPageContent()}, 2000);
+
   loadEventsPageContent(); 
 
+  
   // window.history.pushState({pageName}, pageName,
   // `/${pageName}`);
 }

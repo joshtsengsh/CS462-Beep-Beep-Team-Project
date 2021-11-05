@@ -32,7 +32,7 @@ let table = `
   </div>
 
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document" id="editModalDialog" >
     <div class="modal-content">
       <div class="modal-header">
         <input type="hidden" id="participantID" name="participantID" value="">
@@ -351,6 +351,7 @@ function submitRecord() {
   //if click on back button --> bring them to events page 
   //force route as of now
 }
+
 function closeAttendance(){
   console.log("yeet")
 

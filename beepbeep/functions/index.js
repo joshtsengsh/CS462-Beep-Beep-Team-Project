@@ -30,6 +30,53 @@ app.post('/', (req, res) => res.send(Widgets.create()));
 app.get('/',(req, res) => res.send(Widgets.getAllEvents()));
 app.patch('/', (req, res) => res.send(Widgets.recordParticipant()));
 
+app.patch('/', (req, res) => res.send(Widgets.editParticipantByParticipantId()));
+
+exports.editParticipantByParticipantId = functions.region('asia-southeast1').https.onRequest( (req, res) => {
+    cors()(req, res, () => {
+
+        let participantId = req.body.participantId; 
+
+        let eventId = req.body.eventId; 
+
+        let body = {
+            round1Temperature: req.body.tempOne,
+            attendeeName: req.body.name,
+            round2Attendance: req.body.attTwo,
+            round1Attendance: req.body.attOne,
+            round2Temperature: req.body.tempTwo
+        }
+
+    // where('eventData.attendees', '==', participantId)
+    firestore.collection("events").where('__name__', '==' ,eventId).get().then((querySnapshot) => {
+        //shld have one 
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+
+            let eventData = doc.data()
+
+            let participantData = eventData.attendees[participantId]
+
+            participantData = body; 
+
+            eventData.attendees[participantId] = participantData; 
+
+            doc.ref.update({attendees : eventData.attendees})
+        });
+        // console.log("Sending to client...");
+        // once get the single --> find the id ! 
+        //update it ! 
+
+            // return res.json({status: 'ok'});
+            console.log("Sending to client...");
+            return res.json(`${body.attendeeName},  edited `);
+        });
+
+    })
+
+});
+
+
 // e.g http://localhost:5001/beepbeep-45b71/asia-southeast1/getById?id=2sR86wEWtkHmhd4D0ujO
 exports.getById = functions.region('asia-southeast1').https.onRequest( (req, res) => {
     cors()(req, res, () => {
@@ -166,9 +213,9 @@ exports.recordParticipant = functions.region('asia-southeast1').https.onRequest(
 
             doc.ref.update({attendees : eventData.attendees})
         });
-        // console.log("Sending to client...");
-        // once get the single --> find the id ! 
-        //update it ! 
+            // console.log("Sending to client...");
+            // once get the single --> find the id ! 
+            //update it ! 
 
             // return res.json({status: 'ok'});
             console.log("Sending to client...");

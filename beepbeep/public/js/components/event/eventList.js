@@ -6,7 +6,7 @@ const loadEventsPageContent = () => {
       <div id="card-row" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">        
         <div class="col mb-5" style="padding-top: 10px;">
           <div class="card h-100">
-            <div class="card-header text-center"><b>Add New Event</b></div>
+            <div class="card-header text-center"><b>Add New Training Event</b></div>
             <div class="card-body p-4" style="transform: rotate(0);">
               <div class="text-center">
                 <h5 class="fw-bolder">
@@ -32,7 +32,7 @@ const loadEventsPageContent = () => {
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createEventModalLabel">Create Event</h5>
+          <h5 class="modal-title" id="createEventModalLabel">Create Training Event</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-event">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -43,14 +43,21 @@ const loadEventsPageContent = () => {
 
             <div class="row">
               <div class="col">
-                <div class="form-group">
-                  <label for="event-name" class="col-form-label">Event Name:</label>
-                  <input type="text" class="form-control" id="event-name" name="event-name" autocomplete="off" required>
-                </div>
+
+              <div class="form-group">
+              <label for="event-name" class="col-form-label">Training area :</label>
+              <!-- <input type="number" id="duration" name="duration" class="form-control" autocomplete="off" min="0" required>  -->
+              <select class="custom-select" id="event-name" name="event-name" required>
+                <option value="WAC">WAC</option>
+                <option value="Techwerkz">Techwerkz</option>
+                <option value="Apprentice">Apprentice</option>
+              </select>
+              </div>
+
               </div>
               <div class="col">
                 <div class="form-group">
-                  <!-- <label for="recipient-name" class="col-form-label">Event Date:</label> -->
+                  <!-- <label for="recipient-name" class="col-form-label">Training Date:</label> -->
                   <div class="form-group">
                     <!-- Date input -->
                     <label class="control-label" for="event-date">Date</label>
@@ -72,7 +79,7 @@ const loadEventsPageContent = () => {
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="duration" class="col-form-label">Event Duration (mins) :</label>
+                  <label for="duration" class="col-form-label">Training Duration (mins) :</label>
                   <!-- <input type="number" id="duration" name="duration" class="form-control" autocomplete="off" min="0" required>  -->
                   <select class="custom-select" id="duration" name="duration" required>
                     <!-- <option selected>Open this select menu</option> -->
@@ -114,13 +121,20 @@ const loadEventsPageContent = () => {
   `
   document.getElementById('container').innerHTML = eventCards;
 
-  renderEventCards();
+
+  renderEvents().then((data) => {
+    renderEventCards(data);
+  })
+
+
 }
 
 
-const renderEventCards = () => {
+const renderEventCards = (events) => {
+
+
   events.forEach( (event, i) => {
-    console.log(event)
+    // console.log(event)
     let dateObj = new Date (event.eventData.startDateTime); 
 
     let date = dateObj.toLocaleDateString();
@@ -165,7 +179,7 @@ const renderEventCards = () => {
                 // console.log(index);
                 //get id of the children if have 
                 if (cards.children[index].id) {
-                  console.log(cards.children[index].id);
+                  // console.log(cards.children[index].id);
                   routeToEventPage(cards.children[index].id);
                 } 
           }    

@@ -220,17 +220,26 @@ function containsWord(str, word) {
         reader = port.readable.getReader();
         for (;;) {
           const {value, done} = await reader.read();
+
+          console.log(value);
+          
           if (value) {
             tracker = true 
             if (tracker) {
               sleep(1500); 
             }
             const testing = new TextDecoder().decode(value);
+
+            console.log(testing);
+            
             let stringOutput = ""; 
             // alphas = alphas.concat(testing.toString())
             stringOutput += testing; 
             // console.log(value);
             // term.writeUtf8(value);
+
+            console.log(stringOutput);
+            
 
             if (containsWord(stringOutput, "done")) {
 
@@ -250,9 +259,20 @@ function containsWord(str, word) {
 
               let temp = o[0].split("=")[1].trim()
 
+              console.log(temp);
+
+              // function randomInteger(min, max) {
+              //   return Math.floor(Math.random() * (max - min + 1)) + min;
+              // }
+
+              // let doubleValue = parseFloat(temp) - randomInteger(1, 2);
 
               // check if nameID inside, if inside --> then can send 
               var resultObj = {};
+
+              // console.log(doubleValue)
+
+              console.log(nameID)
 
               getAllKeys.forEach(function(keyName) {
                 // using index of to check if the object key name have a matched string
@@ -268,12 +288,13 @@ function containsWord(str, word) {
                 let actualKey = Object.keys(resultObj)[0]; // get the actual key name to be inserted to db 
 
                 console.log(actualKey);
-                console.log(temp)
+                console.log(temp);
 
                 inputValues(actualKey, temp); 
 
               } else {
-                console.log("participant not found");
+                
+                successSubmission("participant not found");
               }
             
               // if not inside --> participant not found ! 
