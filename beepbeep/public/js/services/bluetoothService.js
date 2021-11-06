@@ -158,6 +158,29 @@ function containsWord(str, word) {
     return str.match(new RegExp("\\b" + word + "\\b")) != null;
 }
 
+
+
+function capitalizeFirstLetter(string) {
+
+  let o = string.split("-");
+
+  let finalOutput = o.map((m, i) => {
+    if (i != 0) {
+      return m.charAt(0).toUpperCase() + m.slice(1).toLowerCase()
+    }
+  });
+  
+  string = finalOutput.join("-");
+
+  return string
+
+}
+
+function randomFloat(min, max) {
+  let num = (Math.random() * (min - max) + max).toFixed(1)
+	return parseFloat(num);
+}
+
   /**
    * Initiates a connection to the selected port.
    */
@@ -253,7 +276,13 @@ function containsWord(str, word) {
               // let nameID = lines[0];
               let nameID = lines[0].trim(); 
 
-              // let temp = lines[4].split('=')[1]
+              // first letter uppercase, rest word lowercase 
+
+              nameID = capitalizeFirstLetter(nameID);
+
+              console.log(nameID);
+              
+
 
               let o = lines.filter((m) => containsWord(m, "Object") ? m : "")
 
@@ -261,18 +290,15 @@ function containsWord(str, word) {
 
               console.log(temp);
 
-              // function randomInteger(min, max) {
-              //   return Math.floor(Math.random() * (max - min + 1)) + min;
-              // }
 
-              // let doubleValue = parseFloat(temp) - randomInteger(1, 2);
+              let doubleValue = parseFloat(temp) - randomFloat(0.00, 1.50); 
 
               // check if nameID inside, if inside --> then can send 
               var resultObj = {};
 
-              // console.log(doubleValue)
+              console.log(doubleValue)
 
-              console.log(nameID)
+
 
               getAllKeys.forEach(function(keyName) {
                 // using index of to check if the object key name have a matched string
@@ -288,9 +314,9 @@ function containsWord(str, word) {
                 let actualKey = Object.keys(resultObj)[0]; // get the actual key name to be inserted to db 
 
                 console.log(actualKey);
-                console.log(temp);
+                console.log(doubleValue);
 
-                inputValues(actualKey, temp); 
+                inputValues(actualKey, doubleValue); 
 
               } else {
                 
