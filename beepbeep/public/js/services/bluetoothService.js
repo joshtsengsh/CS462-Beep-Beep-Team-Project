@@ -291,14 +291,12 @@ function randomFloat(min, max) {
               console.log(temp);
 
 
-              let doubleValue = parseFloat(temp) - randomFloat(0.00, 1.50); 
+              let doubleValue = parseFloat(temp) - randomFloat(-1.50, 1.50); 
 
               // check if nameID inside, if inside --> then can send 
               var resultObj = {};
 
               console.log(doubleValue)
-
-
 
               getAllKeys.forEach(function(keyName) {
                 // using index of to check if the object key name have a matched string
@@ -314,9 +312,9 @@ function randomFloat(min, max) {
                 let actualKey = Object.keys(resultObj)[0]; // get the actual key name to be inserted to db 
 
                 console.log(actualKey);
-                console.log(doubleValue);
+                console.log(parseFloat(doubleValue.toFixed(2)));
 
-                inputValues(actualKey, doubleValue); 
+                inputValues(actualKey, parseFloat(doubleValue.toFixed(2))); 
 
               } else {
                 

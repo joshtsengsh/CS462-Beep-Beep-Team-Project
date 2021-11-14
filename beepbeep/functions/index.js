@@ -42,10 +42,13 @@ exports.editParticipantByParticipantId = functions.region('asia-southeast1').htt
         let body = {
             round1Temperature: req.body.tempOne,
             attendeeName: req.body.name,
-            round2Attendance: req.body.attTwo,
-            round1Attendance: req.body.attOne,
+            round2Attendance: req.body.attTwo == 'Yes' ? true : false,
+            round1Attendance: req.body.attOne == 'Yes' ? true : false,
             round2Temperature: req.body.tempTwo
         }
+
+        console.log(body);
+        
 
     // where('eventData.attendees', '==', participantId)
     firestore.collection("events").where('__name__', '==' ,eventId).get().then((querySnapshot) => {
@@ -219,7 +222,7 @@ exports.recordParticipant = functions.region('asia-southeast1').https.onRequest(
 
             // return res.json({status: 'ok'});
             console.log("Sending to client...");
-            return res.json(`${participantId}, round ${attendanceRound} recorded`);
+            return res.json(`${participantId} - ${temp}, round ${attendanceRound} recorded`);
         });
         // res.json('updated');
     });

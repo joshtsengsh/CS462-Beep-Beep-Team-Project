@@ -5,6 +5,7 @@ let table = `
   <p id="hiddenEventID">
   </p>
   <div id="single-event-component">
+
     <button type="button" class="btn btn-primary" id="back-to-events">Back</button>
     <table id="table"
     data-search="true"
@@ -152,6 +153,8 @@ let table = `
  */
 renderTable =(data) => {
     //render table according to data 
+
+
     var $table = $('#table');
     $(function() {
       //for visuals only 
@@ -223,6 +226,7 @@ closeEditPopup = () => {
 
 
 function loadEventPageContent(id) {
+
   // console.log("Loading content for {" + events[id].eventId + "}");
   // Update text "Content loading for {id}..."
 
@@ -245,6 +249,7 @@ getEventById(id).then((r) =>{
   
 
   document.title = r.eventData.eventName;
+
 })
   
   // renderTable(data)

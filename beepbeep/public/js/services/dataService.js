@@ -126,7 +126,11 @@ const recordingParticipants = (data) => {
       .then(response => response.json())
       .then(json => {
         console.log(json)
-        successSubmission(json)
+        if (output.temp > 37.5) {
+          successSubmission(`<span style="color:red"> WARNING ${json}</span>`) // warning
+        } else {
+          successSubmission(json)
+        }
         // change modal 
       })
       .catch(e => console.log(e))

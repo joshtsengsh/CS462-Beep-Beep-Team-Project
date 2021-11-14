@@ -12,11 +12,12 @@ This project is an SMU-X industry project between Singapore Management Universit
 This project uses IoT to solve a process-related challenge faced by SPD in tracking attendance and temperature scanning of its members during its events.
 
 ## Meet the Team
-- A
-- B
-- C
-- D
-- E
+- Foo Chuan Geng
+- Kenneth Kho 
+- Joshua Tseng
+- Jen Leng
+- Timothy Lim 
+- Soh Ze Yu
 
 Special thanks to Pius Lee for instruction and mentorship through CS462.
 
@@ -50,4 +51,34 @@ round2Temperature: 0,
     },
   }
 }
+``` 
+
+# To run the application as a whole (In any linux Distro)
+
+``` 
+# first create project in your own firebase account 
+
+npm install -g firebase-tools #install firebase cli
+
+firebase login
+
+firebase use --add
+
+firebase serve 
+```
+
+# Backend 
+
+```
+cd beepbeep/functions 
+npm install 
+npm run serve # run local firestore and functions in emulator 
+npm run deploy # deploy backend to production 
+```
+
+# To run only the frontend locally 
+```
+open beepbeep/public/index.html
+
+firebase deploy --only hosting # deploy frontend to production 
 ```
