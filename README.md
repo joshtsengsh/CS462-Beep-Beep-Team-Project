@@ -13,10 +13,17 @@ This project uses IoT to solve a process-related challenge faced by SPD in track
 
 ## Meet the Team
 - Foo Chuan Geng
+<<<<<<< Updated upstream
 - Kenneth Kho 
 - Joshua Tseng
 - Jen Leng
 - Timothy Lim 
+=======
+- Koh Eng Hock
+- Jen Leng
+- Joshua Tseng Shi-Hao
+- Lim Zhong Zhen, Timothy
+>>>>>>> Stashed changes
 - Soh Ze Yu
 
 Special thanks to Pius Lee for instruction and mentorship through CS462.
@@ -28,6 +35,7 @@ Special thanks to Pius Lee for instruction and mentorship through CS462.
 - Cloud: Google Firebase and Firestore
 
 ## Hardware
+<<<<<<< Updated upstream
 - Barcode Scanner (MH-ET Live Scanner)
 - IR Temperature sensor (MLX90614)
 - STSP buttons
@@ -94,3 +102,7 @@ firebase deploy --only hosting # deploy frontend to production
 - component (UI logic)
 - routes (define routing changes on the app)
 - services (api and utilities functions)
+=======
+- Barcode scanner
+- Temperature scanner
+>>>>>>> Stashed changes
