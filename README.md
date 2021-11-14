@@ -90,7 +90,7 @@ open beepbeep/public/index.html # To run only the frontend locally
 firebase deploy --only hosting # deploy frontend to production 
 ```
 
-# Frontend App Structure folders (under beepbeep/public/js folder)
+## Frontend app Structure (under beepbeep/public/js folder)
 - component (UI logic)
 - routes (define routing changes on the app)
 - services (api and utilities functions)
