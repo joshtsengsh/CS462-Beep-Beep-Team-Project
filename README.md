@@ -65,9 +65,11 @@ round2Temperature: 0,
 
 npm install -g firebase-tools #install firebase cli
 
-firebase login
+firebase login 
 
-firebase use --add
+firebase projects:list # view list of project 
+
+firebase use --add #add in firebase project  
 
 firebase serve 
 ```
@@ -81,9 +83,14 @@ npm run serve # run local firestore and functions in emulator
 npm run deploy # deploy backend to production 
 ```
 
-# To run only the frontend locally 
+# Frontend  
 ```
-open beepbeep/public/index.html
+open beepbeep/public/index.html # To run only the frontend locally
 
 firebase deploy --only hosting # deploy frontend to production 
 ```
+
+# Frontend App Structure folders (under beepbeep/public/js folder)
+- component (UI logic)
+- routes (define routing changes on the app)
+- services (api and utilities functions)
