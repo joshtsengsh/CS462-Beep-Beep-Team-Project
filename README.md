@@ -28,7 +28,12 @@ Special thanks to Pius Lee for instruction and mentorship through CS462.
 - Cloud: Google Firebase and Firestore
 
 ## Hardware
-- [Barcode scanner]()
+- Barcode Scanner (MH-ET Live Scanner)
+- IR Temperature sensor (MLX90614)
+- STSP buttons
+- 3D printed chassis to house modules
+- Micro-controller (Arduino Nano)
+- LED 
 
 # Collections
 Collections are how Firebase and Firestore store values in its database. Each collection is similar to a table in a standard relational database.
